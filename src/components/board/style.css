@@ -1,10 +1,6 @@
 .container {
-	width: calc(100%);
-	height: calc(5%);
+	width: auto;
+	height: auto;
+	margin: auto;
 	background-color: white;
-}
-
-.container:hover,
-.container:active {
-	background-color: whitesmoke;
 }

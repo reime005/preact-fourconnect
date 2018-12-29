@@ -4,8 +4,6 @@ export const playerToCellColor = n => {
 	switch (n) {
 		case players.NONE:
 			return colors.CELL_DEFAULT;
-		case players.SELECTED:
-			return colors.CELL_SELECTED;
 		case players.ONE:
 			return colors.CELL_SET_BLUE;
 		case players.TWO:
@@ -16,6 +14,7 @@ export const playerToCellColor = n => {
 export const playerToColumnColor = n => {
 	switch (n) {
 		case players.NONE:
+			return colors.CELL_SELECTED;
 		case players.ONE:
 		case players.TWO:
 			return colors.ROW_DEFAULT;

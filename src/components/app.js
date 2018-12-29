@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { Router, route } from 'preact-router';
 
 import Header from './header';
 
@@ -19,7 +19,7 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = e => {
-		this.currentUrl = e.url;
+		route('/game');
 	};
 
 	render({ isRunning }) {

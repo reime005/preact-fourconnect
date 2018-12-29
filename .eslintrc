@@ -1,0 +1,25 @@
+
+{
+  "extends": [
+    "prettier"
+  ],
+  "plugins": [
+    "prettier",
+    "import"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "usePrettierrc": true
+      }
+    ]
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+    }
+  }
+}

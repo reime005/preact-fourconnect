@@ -2,14 +2,17 @@ import { h } from 'preact';
 import style from './style';
 import Cell from '../cell';
 
-const Row = ({ key, row, onClick }) => (
+const Row = ({ key, row, onClick, onMouseOver, columnSelected, playersTurn }) => (
 	<div key={key} class={style.container}>
 		{
-			row.map((cell) => (
+			row.map((cell, column) => (
 				<Cell
-					key={`${key}-${cell.i}`}
 					{...cell}
+					columnIsSelected={columnSelected === column}
+					playersTurn={playersTurn}
 					onClick={onClick}
+					onMouseOver={onMouseOver}
+					column={column}
 				/>)
 			)
 		}

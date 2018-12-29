@@ -2,7 +2,7 @@ import { h } from 'preact';
 import style from './style';
 import Row from '../row';
 
-const Board = ({ cells, onClick, rowsCount = 7 }) => {
+const Board = ({ cells, onClick, rowsCount = 7, columnSelected, onMouseOver, playersTurn }) => {
 	const rows = [];
 	let row = [];
 
@@ -11,15 +11,13 @@ const Board = ({ cells, onClick, rowsCount = 7 }) => {
 		row.push(cell);
 
 		if (i % rowsCount === (rowsCount - 1)) {
-			rows.push(<Row key={rows.length} row={row} onClick={onClick} />);
+			rows.push(<Row row={row} columnSelected={columnSelected} playersTurn={playersTurn} onClick={onClick} onMouseOver={onMouseOver} />);
 			row = [];
 		}
 	});
 
-	console.warn(rows);
-	
 	return (
-		<div style={style.container}>
+		<div class={style.container}>
 			{rows}
 		</div>
 	);

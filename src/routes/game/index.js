@@ -8,6 +8,7 @@ export default class Game extends Component {
 
 	// gets called when this route is navigated to
 	componentDidMount() {
+		//TODO: [mr] move cells construction to here?
 	}
 
 	// gets called just before navigating away from the route
@@ -16,7 +17,9 @@ export default class Game extends Component {
 
 	render({ cells }, { }) {
 		return (
-			<GameView cells={cells} />
+			<div class={style.container}>
+				<GameView cells={cells} />
+			</div>
 		);
 	}
 }
