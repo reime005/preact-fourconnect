@@ -2,88 +2,133 @@ import { players, CELL_SUM, boardSize } from "../const/boardConfig";
 import { nextPlayer } from "./nextPlayer";
 
 export const makeMove = (board, player = players.NONE, position = -1) => {
+  if (board.isGameEnd) {
+    throw "Game has ended";
+  }
+
   if (board.currentPlayer !== player) {
     throw "Not your turn";
   }
 
-  if (position < 0 || position > CELL_SUM) {
+  if (position < 0 || position >= CELL_SUM) {
     throw `Incorrect move position: ${position}`;
   }
 
-  if (board.cells[position] !== players.NONE) {
+  if (board.cells[position] && board.cells[position] !== players.NONE) {
     throw 'Cell already set';
   }
 
   const nextRowCell = board.cells[position + boardSize.columns];
-
-
-  if (nextRowCell && nextRowCell.player === players.NONE) {
+  
+  if (nextRowCell && nextRowCell === players.NONE) {
     throw 'Next row is not empty!';
   }
+
+  let cells = [
+    ...board.cells,
+  ];
+
+  cells[position] = player;
 
   return {
     ...board,
     currentPlayer: nextPlayer(player),
-    cells: {
-      ...board.cells,
-      [position]: {
-        ...board.cells[position],
-        player
-      }
-    }
+    cells,
   }
 }
 
-export const gameEnd = (lastPosition = -1, board, player = players.NONE) => {
+export const makeAIMove = (board, player = players.TWO) => {
+  const { cells } = board;
+
+  let position = -1;
+
+  for (let i = cells.length - 1; i >= 0; i--) {
+    if (cells[i] === players.NONE) {
+      position = i;
+      break;
+    }
+  }
+
+  if (position === -1) {
+    throw 'No more empty cells';
+  }
+
+  board = makeMove(board, player, position);
+
+  board = gameEnd(position, board, player);
+
+  return board;
+}
+
+export const gameEnd = (lastPosition = -1, board, player) => {
   if (lastPosition < 0 || lastPosition > CELL_SUM) {
     throw `Incorrect lastPosition: ${lastPosition}`;
+  }
+
+  if (player === players.NONE) {
+    throw `Invalid player`;
   }
   
   const { cells } = board;
 
+  let isGameEnd = false;
+  let currentPlayer = player;
+
   // direction 1: up
   // step: back / column
 
-  if (_checkHasWonStraight(cells, -boardSize.columns, lastPosition)) {
-    return true;
-  } else if (_checkHasWonStraight(cells, boardSize.columns, lastPosition)) {
-    return true;
-  } else if (_checkHasWonStraight(cells, -1, lastPosition)) {
-    return true;
-  } else if (_checkHasWonStraight(cells, 1, lastPosition)) {
-    return true;
-  } else if (_checkHasWonDiagonal(-1, boardSize.columns, cells, lastPosition)) {
-    return true;
-  } else if (_checkHasWonDiagonal(1, boardSize.columns, cells, lastPosition)) {
-    return true;
-  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, lastPosition)) {
-    return true;
-  } else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, lastPosition)) {
-    return true;
+  if (_checkHasWonStraight(cells, -boardSize.columns, lastPosition, player)) {
+    console.warn('1');
+    isGameEnd = true;
+  } else if (_checkHasWonStraight(cells, boardSize.columns, lastPosition, player)) {
+    console.warn('2');
+    isGameEnd = true;
+  } else if (_checkHasWonStraight(cells, -1, lastPosition, player)) {
+    console.warn('3');
+    isGameEnd = true;
+  } else if (_checkHasWonStraight(cells, 1, lastPosition, player)) {
+    console.warn('4');
+    isGameEnd = true;
+  } else if (_checkHasWonDiagonal(-1, boardSize.columns, cells, lastPosition, player)) {
+    console.warn('5');
+    isGameEnd = true;
+  } else if (_checkHasWonDiagonal(1, boardSize.columns, cells, lastPosition, player)) {
+    console.warn('6');
+    isGameEnd = true;
+  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, lastPosition, player)) {
+    console.warn('7');
+    isGameEnd = true;
+  } else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, lastPosition, player)) {
+    console.warn('8');
+    isGameEnd = true;
+  }
+
+  if (isGameEnd) {
+    currentPlayer = nextPlayer(player);
   }
   
-  return false;
+  return { ...board, isGameEnd, currentPlayer };
 }
 
-const _checkHasWonDiagonal = (incrementX, incrementY, cells = {}, lastPosition = -1) => {
-  if (incrementX !== 1 || incrementX !== -1) {
+const _checkHasWonDiagonal = (incrementX, incrementY, cells = {}, lastPosition = -1, player) => {
+  if (incrementX != 1 && incrementX != -1) {
     throw 'Diagonal increment for X must either be "-1" or "1"';
   }
 
-  if (incrementY !== boardSize.columns || incrementY !== -boardSize.columns) {
+  if (incrementY !== boardSize.columns && incrementY !== -boardSize.columns) {
     throw `Diagonal increment for Y must either be "${boardSize.columns} or "-${boardSize.columns}`;
   }
 
   const increment = incrementX + incrementY;
 
-  return _checkHasWonStraight(increment, cells, lastPosition);
+  return _checkHasWonStraight(cells, increment, lastPosition, player);
 }
 
-const _checkHasWonStraight = (increment = 0, cells = {}, lastPosition = -1) => {
+const _checkHasWonStraight = (cells = {}, increment = 0, lastPosition = -1, player) => {
   const cellsToCheck = [];
   let i = lastPosition;
 
-  while (i >= 0 && i <= CELL_SUM) {
+  while (i >= 0 && i <= CELL_SUM && cellsToCheck.length < 4) {
     if (cells[i]) {
       cellsToCheck.push(cells[i]);
     }
@@ -91,9 +136,12 @@ const _checkHasWonStraight = (increment = 0, cells = {}, lastPosition = -1) => {
     i += increment;
   }
 
+  if (cellsToCheck.length !== 4) {
+    return;
+  }  
   return _checkIndicesValid(player, cellsToCheck);
 }
 
-const _checkIndicesValid = (player = players.NONE, indices = []) => 
-  indices.filter(indice => player !== players.NONE && indice.player === player)
-    .length === 4;
+const _checkIndicesValid = (player, indices = []) => 
+  indices.reduce((sum, i) => sum + (i === player ? 1 : 0), 0) === 4;
+

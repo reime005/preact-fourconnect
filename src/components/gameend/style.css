@@ -1,0 +1,15 @@
+.gameEnd {
+	text-align: center;
+	padding: 50px;
+	position: fixed;
+	display: block;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	background-color: rgba(204, 204, 204, 0.932);
+}

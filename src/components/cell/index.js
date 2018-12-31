@@ -4,6 +4,9 @@ import { playerToCellColor, playerToColumnColor } from '../../lib/playerConvert'
 
 class Cell extends Component {
 	onCellClick() {
+		console.warn(this.props.i);
+		console.warn(typeof this.props.i);
+		
 		this.props.onClick(this.props.i);
 	}
 

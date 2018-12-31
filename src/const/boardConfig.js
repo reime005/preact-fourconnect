@@ -19,8 +19,7 @@ export const colors = {
 };
 
 export const players = {
-	NONE: 0,
-	SELECTED: -1,
+	NONE: -1,
 	ONE: 1,
 	TWO: 2
 };

@@ -3,28 +3,82 @@ import style from './style';
 import Board from '../board';
 import { players, CELL_SUM, boardSize } from '../../const/boardConfig';
 import { nextPlayer } from '../../lib/nextPlayer';
-import { makeMove, gameEnd } from '../../lib/gameLogic';
+import { makeMove, gameEnd, makeAIMove } from '../../lib/gameLogic';
+import { GameEnd } from '../gameend';
+import { initialGameState } from '../../const/initialState';
+import { delay } from 'core-js';
+import { newBoard } from '../../lib/newBoard';
 
 class GameView extends Component {
-	onCellClick(cellIndex) {
-		try {
-			const { cells, currentPlayer } = makeMove({ 
-				cells: this.state.cells, 
-				currentPlayer: this.state.currentPlayer 
-			}, cellIndex);
+	_resetState() {
+		let board = {};
+		let hasAI = true;
 
-			const isGameEnd = gameEnd({ 
-				cells: this.state.cells, 
-				currentPlayer: this.state.currentPlayer 
-			});
+		if (this.props.board) {
+			board = this.props.board;
+			hasAI = false;
+		} else {
+			board = newBoard(players.NONE);
+		}
+
+		//TODO: [mr] calc current/first player here
+
+		this.setState({
+			board,
+			hasAI,
+			rowsCount: boardSize.rows,
+			columnSelected: -1,
+			playersTurn: true,
+		});
+	}
+
+	async onGameEndClick() {
+		await delay(500);
+		
+		//await this.props.newGame(); --> new props
+		this._resetState();
+
+		//tmp
+		this.setState({isGameEnd: false})
+	}
+
+	async onCellClick(cellIndex) {
+		await delay(250);
+
+		try {
+			if (this.state.board.isGameEnd) {
+				throw 'Game has end';
+			}
+
+			let board = makeMove({ 
+				...this.state.board,
+				currentPlayer: players.ONE,//this.state.currentPlayer 
+			},
+			players.ONE, cellIndex);
+
+			board = gameEnd(
+			cellIndex, 
+			{ 
+				...board,
+				currentPlayer: players.ONE
+			},
+			players.ONE);
+
+			if (!board.isGameEnd && this.state.hasAI) {
+				board = makeAIMove( 
+					{ 
+						...board,
+						currentPlayer: players.TWO
+					});
+			}
+
+			console.error(board.isGameEnd);
 
 			this.setState({
-				cells,
-				currentPlayer,
-				isGameEnd,
+				board,
 			});
-			 
-		} catch(error) {
+		} catch (error) {
+			console.error(error);
 			this.setState({ error });
 		}
 	}
@@ -47,42 +101,35 @@ class GameView extends Component {
 
 	constructor(props) {
 		super(props);
-
-		let cells = [];
-		let hasAI = true;
-		let rowsCount = boardSize.rows;
 		
-		if (props.cells) {
-			cells = props.cells.map(cell => cell);
-			hasAI = false;
-		}
-		else {
-			Array.from({ length: CELL_SUM }, (x, i) => cells.push({ i, player: players.NONE }));
-		}
+		this.state = initialGameState;
 
-		if (props.rowsCount) {
-			rowsCount = props.rowsCount;
-		}
-
-		this.state = {
-			cells,
-			hasAI,
-			rowsCount,
-			columnSelected: -1,
-			currentPlayer: players.ONE,
-			playersTurn: true,
-			isGameEnd: false,
-		};
-
+		this._resetState = this._resetState.bind(this);
+		this.onGameEndClick = this.onGameEndClick.bind(this);
 		this.onCellClick = this.onCellClick.bind(this);
 		this.onMouseOver = this.onMouseOver.bind(this);
 	}
 
-	render({ }, { cells, columnSelected, playersTurn }) {
+	componentDidMount() {
+		this._resetState();
+	}
+
+	render({ }, { board, columnSelected, playersTurn }) {
 
 		return (
 			<div class={style.container}>
-				<Board cells={cells} onClick={this.onCellClick} columnSelected={columnSelected} playersTurn={playersTurn} onMouseOver={this.onMouseOver} />
+					<Board 
+						cells={board.cells || []} 
+						onClick={this.onCellClick} 
+						columnSelected={columnSelected} 
+						playersTurn={playersTurn} 
+						onMouseOver={this.onMouseOver} 
+					/>
+					<GameEnd 
+						isGameEnd={board.isGameEnd} 
+						won={!playersTurn} 
+						onGameEndClick={this.onGameEndClick}
+					/>
 			</div>
 		);
 	}
