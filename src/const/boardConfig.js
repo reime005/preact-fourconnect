@@ -10,8 +10,10 @@ export const WINNER_COUNT = 4;
 export const colors = {
 	CELL_DEFAULT: '#4b7ffa',
 	CELL_SELECTED: '#ddd',
-	CELL_SET_BLUE: '#e81916',
-	CELL_SET_YELLOW: '#f7ec17',
+	CELL_SET_RED: '#e85d5a',
+	CELL_SET_YELLOW: '#f7f297',
+	CELL_RED: '#e80500',
+	CELL_YELLOW: '#f7eb00',
 	ROW_DEFAULT: '#185bfa',
 	ROW_SELECTED: '#4b7ffa',
 	BLACK: '#0f0f0f',

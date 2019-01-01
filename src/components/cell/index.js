@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style';
-import { playerToCellColor, playerToColumnColor } from '../../lib/playerConvert';
+import { playerToCellColor, playerToCellSelectedColor } from '../../lib/playerConvert';
 
 class Cell extends Component {
 	onCellClick() {
@@ -35,7 +35,7 @@ class Cell extends Component {
 				<div
 					class={style.cell}
 					style={{
-						backgroundColor: columnIsSelected ? playerToColumnColor(player) : playerToCellColor(player)
+						backgroundColor: columnIsSelected ? playerToCellSelectedColor(player) : playerToCellColor(player)
 					}}
 				/>
 			</div>

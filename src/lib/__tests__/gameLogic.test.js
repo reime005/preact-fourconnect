@@ -32,11 +32,19 @@ describe('makeMove', () => {
   });
   
 	test('should not fail if not your turn', () => {
-    const board = newBoard();
+    let board = newBoard();
 
-    makeMove(board, players.ONE, 41);
-    makeMove(board, players.ONE, 35);
-    makeMove(board, players.ONE, 36);
+    board = makeMove(board, players.ONE, 41);
+    board = makeMove(board, players.TWO, 35);
+    board = makeMove(board, players.ONE, 36);
+	});
+  
+	test('should not fail', () => {
+    let board = newBoard();
+
+    board = makeMove(board, players.ONE, 41);
+    board = makeMove(board, players.TWO, 40);
+    board = makeMove(board, players.ONE, 35);
 	});
   
 /*
@@ -115,10 +123,8 @@ describe('makeMove', () => {
       }
     });
 
-    expect(gameEnd(6, board, players.TWO).isGameEnd).toEqual(true);
-    expect(gameEnd(24, board, players.TWO).isGameEnd).toEqual(true);
-    expect(gameEnd(6, board, players.ONE).isGameEnd).toEqual(false);
-    expect(gameEnd(24, board, players.ONE).isGameEnd).toEqual(false);
+    expect(gameEnd(6, board).isGameEnd).toEqual(true);
+    expect(gameEnd(24, board).isGameEnd).toEqual(true);
 
     expect(gameEnd(40, board, players.ONE).isGameEnd).toEqual(false);
     expect(gameEnd(26, board, players.ONE).isGameEnd).toEqual(false);

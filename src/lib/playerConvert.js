@@ -5,21 +5,21 @@ export const playerToCellColor = n => {
 		case players.NONE:
 			return colors.CELL_DEFAULT;
 		case players.ONE:
-			return colors.CELL_SET_BLUE;
+			return colors.CELL_RED;
 		case players.TWO:
-			return colors.CELL_SET_YELLOW;
+			return colors.CELL_YELLOW;
 	}
 };
 
-export const playerToColumnColor = n => {
+export const playerToCellSelectedColor = n => {
 	switch (n) {
-		case players.NONE:
-			return colors.CELL_SELECTED;
 		case players.ONE:
+			return colors.CELL_SET_RED;
 		case players.TWO:
-			return colors.ROW_DEFAULT;
-		case players.SELECTED:
-			return colors.ROW_SELECTED;
+			return colors.CELL_SET_YELLOW;
+		case players.NONE:
+		default:
+			return colors.CELL_SELECTED;
 	}
 };
 

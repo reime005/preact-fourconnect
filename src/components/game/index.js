@@ -22,6 +22,7 @@ class GameView extends Component {
 		}
 
 		//TODO: [mr] calc current/first player here
+		board.currentPlayer = players.ONE;
 
 		this.setState({
 			board,
@@ -37,45 +38,34 @@ class GameView extends Component {
 		
 		//await this.props.newGame(); --> new props
 		this._resetState();
-
-		//tmp
-		this.setState({isGameEnd: false})
 	}
 
 	async onCellClick(cellIndex) {
-		await delay(250);
+		await delay(150);
 
 		try {
 			if (this.state.board.isGameEnd) {
 				throw 'Game has end';
 			}
 
-			let board = makeMove({ 
-				...this.state.board,
-				currentPlayer: players.ONE,//this.state.currentPlayer 
-			},
-			players.ONE, cellIndex);
-
-			board = gameEnd(
-			cellIndex, 
-			{ 
-				...board,
-				currentPlayer: players.ONE
-			},
-			players.ONE);
-
-			if (!board.isGameEnd && this.state.hasAI) {
-				board = makeAIMove( 
-					{ 
-						...board,
-						currentPlayer: players.TWO
-					});
+			if (this.state.board.currentPlayer !== players.ONE) {
+				throw 'Not your turn';
 			}
 
-			console.error(board.isGameEnd);
+			let board = makeMove(this.state.board, players.ONE, cellIndex);
+
+			board = gameEnd(cellIndex, board, players.ONE);
 
 			this.setState({
 				board,
+			}, async() => {
+				if (!board.isGameEnd && this.state.hasAI && board.currentPlayer === players.TWO) {
+					await delay(Math.floor((Math.random() * 1500) + 500));
+	
+					board = makeAIMove(board);
+	
+					this.setState({ board });
+				}
 			});
 		} catch (error) {
 			console.error(error);
@@ -127,7 +117,7 @@ class GameView extends Component {
 					/>
 					<GameEnd 
 						isGameEnd={board.isGameEnd} 
-						won={!playersTurn} 
+						won={playersTurn} 
 						onGameEndClick={this.onGameEndClick}
 					/>
 			</div>

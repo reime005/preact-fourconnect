@@ -60,51 +60,38 @@ export const makeAIMove = (board, player = players.TWO) => {
   return board;
 }
 
-export const gameEnd = (lastPosition = -1, board, player) => {
+export const gameEnd = (lastPosition = -1, board) => {
   if (lastPosition < 0 || lastPosition > CELL_SUM) {
     throw `Incorrect lastPosition: ${lastPosition}`;
   }
 
-  if (player === players.NONE) {
-    throw `Invalid player`;
-  }
+  const lastPlayer = nextPlayer(board.currentPlayer);
   
   const { cells } = board;
 
   let isGameEnd = false;
-  let currentPlayer = player;
+  let currentPlayer = board.currentPlayer;
 
-  // direction 1: up
-  // step: back / column
-
-  if (_checkHasWonStraight(cells, -boardSize.columns, lastPosition, player)) {
-    console.warn('1');
+  if (_checkHasWonStraight(cells, -boardSize.columns, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, boardSize.columns, lastPosition, player)) {
-    console.warn('2');
+  } else if (_checkHasWonStraight(cells, boardSize.columns, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, -1, lastPosition, player)) {
-    console.warn('3');
+  } else if (_checkHasWonStraight(cells, -1, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, 1, lastPosition, player)) {
-    console.warn('4');
+  } else if (_checkHasWonStraight(cells, 1, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonDiagonal(-1, boardSize.columns, cells, lastPosition, player)) {
-    console.warn('5');
+  } else if (_checkHasWonDiagonal(-1, boardSize.columns, cells, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonDiagonal(1, boardSize.columns, cells, lastPosition, player)) {
-    console.warn('6');
+  } else if (_checkHasWonDiagonal(1, boardSize.columns, cells, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, lastPosition, player)) {
-    console.warn('7');
+  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, lastPosition, lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, lastPosition, player)) {
-    console.warn('8');
+  } else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, lastPosition, lastPlayer)) {
     isGameEnd = true;
   }
 
   if (isGameEnd) {
-    currentPlayer = nextPlayer(player);
+    currentPlayer = nextPlayer(lastPlayer);
   }
   
   return { ...board, isGameEnd, currentPlayer };
