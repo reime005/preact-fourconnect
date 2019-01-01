@@ -10,19 +10,28 @@ import { delay } from 'core-js';
 import { newBoard } from '../../lib/newBoard';
 
 class GameView extends Component {
-	_resetState() {
-		let board = {};
+	async _resetState() {
+		let board = JSON.parse(localStorage.getItem('fourconnect.board'));
+
+		if (board.isGameEnd) {
+			board = null;
+		}
+		
 		let hasAI = true;
 
 		if (this.props.board) {
 			board = this.props.board;
 			hasAI = false;
-		} else {
-			board = newBoard(players.NONE);
 		}
 
-		//TODO: [mr] calc current/first player here
-		board.currentPlayer = players.ONE;
+		if (!board) {
+			if (!this.props.board) {
+				board = newBoard(players.NONE);
+			}
+	
+			//TODO: [mr] calc current/first player here
+			board.currentPlayer = players.ONE;
+		}
 
 		this.setState({
 			board,
@@ -31,6 +40,24 @@ class GameView extends Component {
 			columnSelected: -1,
 			playersTurn: true,
 		});
+
+		if (hasAI && board.currentPlayer !== players.ONE) {
+			await delay(Math.floor((Math.random() * 1500) + 500));
+			
+			board = await makeAIMove(board);
+
+			this.setState({ board });
+		}
+
+		if (!this.props.board) {
+			localStorage.setItem('fourconnect.board', JSON.stringify(board));
+		}
+	}
+
+	componentDidUpdate() {
+		if (!this.props.board) {
+			localStorage.setItem('fourconnect.board', JSON.stringify(this.state.board));
+		}
 	}
 
 	async onGameEndClick() {
@@ -40,7 +67,17 @@ class GameView extends Component {
 		this._resetState();
 	}
 
-	async onCellClick(cellIndex) {
+	async onCellClick(column) {
+		const nextFreeCell = (column, board) => {
+			for (let i = CELL_SUM - boardSize.columns + column; i >= 0; i -= boardSize.columns) {
+				if (board.cells[i] === players.NONE) {
+					return i;
+				}
+			}
+
+			throw 'No empty cells in this column';
+		}
+
 		await delay(150);
 
 		try {
@@ -51,6 +88,8 @@ class GameView extends Component {
 			if (this.state.board.currentPlayer !== players.ONE) {
 				throw 'Not your turn';
 			}
+
+			const cellIndex = nextFreeCell(column, this.state.board);
 
 			let board = makeMove(this.state.board, players.ONE, cellIndex);
 
@@ -68,7 +107,6 @@ class GameView extends Component {
 				}
 			});
 		} catch (error) {
-			console.error(error);
 			this.setState({ error });
 		}
 	}

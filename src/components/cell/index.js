@@ -1,13 +1,11 @@
 import { h, Component } from 'preact';
 import style from './style';
 import { playerToCellColor, playerToCellSelectedColor } from '../../lib/playerConvert';
+import { boardSize } from '../../const/boardConfig';
 
 class Cell extends Component {
 	onCellClick() {
-		console.warn(this.props.i);
-		console.warn(typeof this.props.i);
-		
-		this.props.onClick(this.props.i);
+		this.props.onClick(this.props.column);
 	}
 
 	onMouseOver(e) {
@@ -21,7 +19,7 @@ class Cell extends Component {
 		this.onMouseOver = this.onMouseOver.bind(this);
 	}
 
-	render({ i, columnIsSelected, player, playersTurn }) {
+	render({ i, columnIsSelected, player, column }) {
 		return (
 			<div
 				key={`cell-${i}`}
@@ -37,7 +35,9 @@ class Cell extends Component {
 					style={{
 						backgroundColor: columnIsSelected ? playerToCellSelectedColor(player) : playerToCellColor(player)
 					}}
-				/>
+				>
+					{/* {`${i}`} */}
+				</div>
 			</div>
 		);
 	}

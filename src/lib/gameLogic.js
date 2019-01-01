@@ -72,24 +72,60 @@ export const gameEnd = (lastPosition = -1, board) => {
   let isGameEnd = false;
   let currentPlayer = board.currentPlayer;
 
-  if (_checkHasWonStraight(cells, -boardSize.columns, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, boardSize.columns, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, -1, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonStraight(cells, 1, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonDiagonal(-1, boardSize.columns, cells, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonDiagonal(1, boardSize.columns, cells, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, lastPosition, lastPlayer)) {
-    isGameEnd = true;
-  } else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, lastPosition, lastPlayer)) {
-    isGameEnd = true;
+  // go to the most left position --> straight horizontal check
+  const getMostLeftPosition = (lastPosition) => {
+    while (lastPosition % boardSize.columns !== 0) {
+      lastPosition--;
+    }
+
+    return lastPosition;
   }
 
+  // go to the most bottom positon --> straight vertical check
+  const getMostBottomPositon = (lastPosition) => {
+    const cols = boardSize.columns;
+
+    while (lastPosition + cols < CELL_SUM) {
+      lastPosition += cols;
+    }
+    
+    return lastPosition;
+  }
+
+  // go to the most bottom left position --> right diagonal check
+  const getMostBottomLeftPositon = (lastPosition) => {
+    const cols = boardSize.columns;
+
+    while (lastPosition + cols < CELL_SUM && lastPosition % boardSize.columns !== 0) {
+      lastPosition += cols;
+      lastPosition -= 1;
+    }
+    
+    return lastPosition;
+  }
+
+  // go to the most bottom right position --> left diagonal check
+  const getMostBottomRightPositon = (lastPosition) => {
+    const cols = boardSize.columns;
+
+    while (lastPosition + cols < CELL_SUM && (lastPosition + 1) % boardSize.columns !== 0) {
+      lastPosition += cols;
+      lastPosition += 1;
+    }
+    
+    return lastPosition;
+  }
+
+  if (_checkHasWon(cells, 1, getMostLeftPosition(lastPosition), lastPlayer)) {
+    isGameEnd = true;
+  } else if (_checkHasWon(cells, -boardSize.columns, getMostBottomPositon(lastPosition), lastPlayer)) {
+    isGameEnd = true;
+  }  else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, getMostBottomLeftPositon(lastPosition), lastPlayer)) {
+    isGameEnd = true;
+  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, getMostBottomRightPositon(lastPosition), lastPlayer)) {
+    isGameEnd = true;
+  } 
+  
   if (isGameEnd) {
     currentPlayer = nextPlayer(lastPlayer);
   }
@@ -108,24 +144,35 @@ const _checkHasWonDiagonal = (incrementX, incrementY, cells = {}, lastPosition =
 
   const increment = incrementX + incrementY;
 
-  return _checkHasWonStraight(cells, increment, lastPosition, player);
+  return _checkHasWon(cells, increment, lastPosition, player);
 }
 
-const _checkHasWonStraight = (cells = {}, increment = 0, lastPosition = -1, player) => {
+const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
   const cellsToCheck = [];
   let i = lastPosition;
 
-  while (i >= 0 && i <= CELL_SUM && cellsToCheck.length < 4) {
-    if (cells[i]) {
+  // stay inside the tresholds and max 4 in a row
+  while (i >= 0 && i <= cells.length && cellsToCheck.length < 4) {
+    // if we already found one player and now found someone else
+    if (cells[i] !== player && cellsToCheck.length > 0) {
+      cellsToCheck.pop();
+    } else if (cells[i] === player) {
       cellsToCheck.push(cells[i]);
     }
 
+    // if we are on the edge of a row
+    // note that an increment if 1 means straight
+    if ((i + 1) % boardSize.columns === 0 && increment === 1) {
+      break;
+    }
+  
     i += increment;
   }
 
-  if (cellsToCheck.length !== 4) {
-    return;
-  }  
+  if (increment === 1 && cellsToCheck.length !== 4) {
+    return false;
+  }
+
   return _checkIndicesValid(player, cellsToCheck);
 }
 

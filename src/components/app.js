@@ -7,11 +7,34 @@ import Header from './header';
 import Home from '../routes/home';
 import Profile from '../routes/profile';
 import Game from '../routes/game';
+import { OfflineListener } from '../helpers/offlineListener';
 
 export default class App extends Component {
-	state = {
-		isAuthentified: false,
-		isRunning: true
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isAuthentified: false,
+			isRunning: false,
+			isOnline: false,
+		}
+
+		this.onNewGame = this.onNewGame.bind(this);
+	}
+
+	componentDidMount() {
+		this.offlineListener = new OfflineListener({ onChange: isOnline => this.setState({ isOnline })});	
+		this.offlineListener.start();
+
+		let board = JSON.parse(localStorage.getItem('fourconnect.board'));
+
+		if (!board.isGameEnd && board.cells) {
+			this.setState({ isRunning: true });
+		}
+	}
+
+	componentWillUnmount() {
+		this.offlineListener.stop();
 	}
 
 	/** Gets fired when the route changes.
@@ -19,18 +42,26 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = e => {
-		route('/game');
+		if (this.state.isRunning) {
+			route('/game');
+		} else {
+			route('/');
+		}
 	};
 
-	render({ isRunning }) {
+	onNewGame() {
+		this.setState({ isRunning: true }, () => {
+			route('/game');
+		});
+	}
+
+	render({ }, { isOnline, isRunning }) {
 		return (
 			<div id="app">
-				<Header />
+				<Header isOnline={isOnline} />
 				<Router onChange={this.handleRoute}>
-					<Home changeName={this.changeName} name={name} path="/" />
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
-					<Game isRunning={isRunning} path="/game" />
+					<Home isRunning={isRunning} onNewGame={this.onNewGame} changeName={this.changeName} name={name} path="/" />
+					<Game isOnline={isOnline} path="/game" />
 				</Router>
 			</div>
 		);

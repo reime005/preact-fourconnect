@@ -2,6 +2,14 @@ import { makeMove, gameEnd } from "../gameLogic";
 import { CELL_SUM, players } from "../../const/boardConfig";
 import { newBoard } from "../newBoard";
 
+/*
+  0   1   2   3   4   5   6
+  7   8   9   10	11	12	13
+  14	15	16	17	18	19	20
+  21	22	23	24	25	26	27
+  28	29	30	31	32	33	34
+  35	36	37	38	39	40	41
+*/
 describe('makeMove', () => {
 	test('should fail if not your turn', () => {
     const board = newBoard();
@@ -47,15 +55,7 @@ describe('makeMove', () => {
     board = makeMove(board, players.ONE, 35);
 	});
   
-/*
-0   1   2   3   4   5   6
-7   8   9   10	11	12	13
-14	15	16	17	18	19	20
-21	22	23	24	25	26	27
-28	29	30	31	32	33	34
-35	36	37	38	39	40	41
-*/
-	test('should run a diagonal game', () => {
+	test('should run a straight game', () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -75,11 +75,17 @@ describe('makeMove', () => {
       }
     });
 
-    expect(gameEnd(4, board, players.ONE).isGameEnd).toEqual(false);
-    expect(gameEnd(0, board, players.ONE).isGameEnd).toEqual(false);
+    board.currentPlayer = players.ONE;
+
+    expect(gameEnd(4, board).isGameEnd).toEqual(false);
+    expect(gameEnd(0, board).isGameEnd).toEqual(false);
+    expect(gameEnd(1, board).isGameEnd).toEqual(false);
+    expect(gameEnd(2, board).isGameEnd).toEqual(false);
  
-    expect(gameEnd(24, board, players.TWO).isGameEnd).toEqual(true);
-    expect(gameEnd(27, board, players.TWO).isGameEnd).toEqual(true);
+    expect(gameEnd(24, board).isGameEnd).toEqual(true);
+    expect(gameEnd(27, board).isGameEnd).toEqual(true);
+    expect(gameEnd(26, board).isGameEnd).toEqual(true);
+    expect(gameEnd(25, board).isGameEnd).toEqual(true);
   });
 
 	test('should run a diagonal game 1', () => {
@@ -90,21 +96,25 @@ describe('makeMove', () => {
         case 6:
         case 12:
           return players.ONE;
-        case 0:
-        case 8:
-        case 16:
-        case 24:
+        case 3:
+        case 9:
+        case 15:
+        case 21:
           return players.TWO;
         default:
           return players.NONE;
       }
     });
 
-    expect(gameEnd(24, board, players.TWO).isGameEnd).toEqual(true);
-    expect(gameEnd(0, board, players.TWO).isGameEnd).toEqual(true);
+    board.currentPlayer = players.ONE;
+
+    expect(gameEnd(3, board).isGameEnd).toEqual(true);
+    expect(gameEnd(9, board).isGameEnd).toEqual(true);
+    expect(gameEnd(15, board).isGameEnd).toEqual(true);
+    expect(gameEnd(21, board).isGameEnd).toEqual(true);
   });
 
-	test('should run a diagonal game 2', () => {
+	test('should run a diagonal game 2,3', () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -113,21 +123,129 @@ describe('makeMove', () => {
         case 12:
         case 18:
         case 24:
-          return players.TWO;
+          return players.ONE;
         case 40:
         case 33:
         case 26:
-          return players.ONE;
+          return players.TWO;
         default:
           return players.NONE;
       }
     });
 
+    board.currentPlayer = players.TWO;
+
     expect(gameEnd(6, board).isGameEnd).toEqual(true);
+    expect(gameEnd(12, board).isGameEnd).toEqual(true);
+    expect(gameEnd(18, board).isGameEnd).toEqual(true);
     expect(gameEnd(24, board).isGameEnd).toEqual(true);
 
-    expect(gameEnd(40, board, players.ONE).isGameEnd).toEqual(false);
-    expect(gameEnd(26, board, players.ONE).isGameEnd).toEqual(false);
+    expect(gameEnd(40, board).isGameEnd).toEqual(false);
+    expect(gameEnd(26, board).isGameEnd).toEqual(false);
+    expect(gameEnd(33, board).isGameEnd).toEqual(false);
+  });
+
+	test('should run a diagonal game 3,4', () => {
+    let board = newBoard();
+
+    board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
+      switch (i) {
+        case 3:
+        case 11:
+        case 19:
+        case 27:
+          return players.ONE;
+        case 14:
+        case 22:
+        case 30:
+        case 38:
+          return players.ONE;
+        case 40:
+        case 33:
+        case 26:
+          return players.TWO;
+        default:
+          return players.NONE;
+      }
+    });
+
+    board.currentPlayer = players.TWO;
+
+    expect(gameEnd(3, board).isGameEnd).toEqual(true);
+    expect(gameEnd(11, board).isGameEnd).toEqual(true);
+    expect(gameEnd(19, board).isGameEnd).toEqual(true);
+    expect(gameEnd(27, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(14, board).isGameEnd).toEqual(true);
+    expect(gameEnd(22, board).isGameEnd).toEqual(true);
+    expect(gameEnd(30, board).isGameEnd).toEqual(true);
+    expect(gameEnd(38, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(40, board).isGameEnd).toEqual(false);
+    expect(gameEnd(26, board).isGameEnd).toEqual(false);
+    expect(gameEnd(33, board).isGameEnd).toEqual(false);
+  });
+
+	test('should run a straight game 1', () => {
+    let board = newBoard();
+
+    board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
+      switch (i) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+          return players.ONE;
+        case 40:
+        case 33:
+        case 26:
+          return players.TWO;
+        default:
+          return players.NONE;
+      }
+    });
+
+    board.currentPlayer = players.TWO;
+
+    expect(gameEnd(0, board).isGameEnd).toEqual(true);
+    expect(gameEnd(3, board).isGameEnd).toEqual(true);
+    expect(gameEnd(1, board).isGameEnd).toEqual(true);
+    expect(gameEnd(2, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(40, board).isGameEnd).toEqual(false);
+    expect(gameEnd(26, board).isGameEnd).toEqual(false);
+    expect(gameEnd(33, board).isGameEnd).toEqual(false);
+  });
+
+	test('should run a straight game 2', () => {
+    let board = newBoard();
+
+    board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
+      switch (i) {
+        case 2:
+        case 9:
+        case 16:
+        case 23:
+          return players.ONE;
+        case 41:
+        case 34:
+        case 27:
+          return players.TWO;
+        default:
+          return players.NONE;
+      }
+    });
+
+    board.currentPlayer = players.TWO;
+
+    expect(gameEnd(2, board).isGameEnd).toEqual(true);
+    expect(gameEnd(9, board).isGameEnd).toEqual(true);
+    expect(gameEnd(16, board).isGameEnd).toEqual(true);
+    expect(gameEnd(23, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(41, board).isGameEnd).toEqual(false);
+    expect(gameEnd(34, board).isGameEnd).toEqual(false);
+    expect(gameEnd(27, board).isGameEnd).toEqual(false);
   });
 
 	test('should run a simple straight win game player 2', () => {

@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import style from './style';
 import Cell from '../cell';
+import { boardSize } from '../../const/boardConfig';
 
 const Row = ({ i, row, onClick, onMouseOver, columnSelected, playersTurn }) => {
 	return(
@@ -9,7 +10,7 @@ const Row = ({ i, row, onClick, onMouseOver, columnSelected, playersTurn }) => {
 			row.map((cell, columnId) => {
 				return(
 				<Cell
-					i={(Number(i) - 6) + Number(columnId)}
+					i={(Number(i) - boardSize.rows) + Number(columnId)}
 					player={cell}
 					columnIsSelected={columnSelected === columnId}
 					playersTurn={playersTurn}
