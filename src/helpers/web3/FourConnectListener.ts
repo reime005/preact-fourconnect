@@ -8,7 +8,7 @@ export class FourConnectListener {
   // }
 
 
-  public go(tee: string = "fsgs") {
+  public go(tee: string = "fssgs") {
     console.log('test');
   }
 }
