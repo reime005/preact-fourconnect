@@ -9,7 +9,7 @@ export class FourConnectListener {
 
 
   public go(tee: string = "fsssfsfassgs") {
-    console.log('test');
+    console.log("test");
   }
 }
 
