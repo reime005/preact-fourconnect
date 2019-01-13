@@ -8,7 +8,7 @@ export class FourConnectListener {
   // }
 
 
-  public go(tee: string = 'test') {
+  public go(tee: string = 'btsebt') {
     console.log('test');
   }
 }
