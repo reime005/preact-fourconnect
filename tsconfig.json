@@ -8,6 +8,7 @@
 		"module": "commonjs",
 		"noImplicitAny": false,
 		"removeComments": true,
+		"strict": true,
 		"sourceMap": true,
 		"jsx": "react",
 		"jsxFactory": "h",
@@ -16,10 +17,13 @@
 	"suppressImplicitAnyIndexErrors": true,
 	"lib": [
 		"dom",
-		"es2017"
+		"es6"
 	],
 	"baseUrl": ".",
 	"exclude": [
 		"dist"
+	],
+	"include": [
+		"node_modules/@types"
 	]
 }

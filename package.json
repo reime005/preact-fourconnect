@@ -18,6 +18,13 @@
     "build/*"
   ],
   "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.23",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^3.4.0",
     "eslint-config-synacor": "^2.0.2",
@@ -25,13 +32,14 @@
     "eslint-plugin-prettier": "^3.0.1",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
-    "jest": "^21.2.1",
+    "jest": "^23.6.0",
     "preact-cli": "^2.1.0",
     "preact-cli-plugin-async": "^2.0.0",
     "preact-cli-plugin-env-vars": "^1.2.1",
     "preact-cli-plugin-typescript": "^0.2.2",
     "preact-render-spy": "^1.2.1",
     "prettier": "^1.15.3",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -47,10 +55,24 @@
   },
   "jest": {
     "verbose": true,
+    "globals": {
+      "ts-jest": {
+        "extends": "./tsconfig",
+        "compilerOptions": {
+          "jsx": "react",
+          "module": "commonjs"
+        }
+      }
+    },
+    
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest",
+      "\\.(js|jsx)$": "./transformPreprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
     "setupFiles": [
       "<rootDir>/tests/__mocks__/browserMocks.js"
     ],
-    "testRegex": "(/(__tests__|tests)/.*|(\\.|/)(test|spec))\\.jsx?$",
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/tests/__mocks__/*"
@@ -58,7 +80,9 @@
     "testURL": "http://localhost:8080",
     "moduleFileExtensions": [
       "js",
-      "jsx"
+      "jsx",
+      "ts",
+      "tsx"
     ],
     "moduleDirectories": [
       "node_modules"
