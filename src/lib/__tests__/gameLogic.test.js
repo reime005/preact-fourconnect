@@ -10,52 +10,64 @@ import { newBoard } from "../newBoard";
   28	29	30	31	32	33	34
   35	36	37	38	39	40	41
 */
-describe('makeMove', () => {
-	test('should fail if not your turn', () => {
+describe("makeMove", () => {
+  test("should fail if not your turn", () => {
     const board = newBoard();
 
-    expect(() => makeMove(board, players.TWO, 41)).toThrow('Not your turn');
+    expect(() => makeMove(board, players.TWO, 41)).toThrow("Not your turn");
   });
 
-	test('should fail if not your turn', () => {
+  test("should fail if not your turn", () => {
     const board = newBoard();
 
-    expect(() => makeMove(board, players.TWO, 15)).toThrow('Not your turn');
+    expect(() => makeMove(board, players.TWO, 15)).toThrow("Not your turn");
   });
 
-	test('should fail for over treshold cases', () => {
+  test("should fail for over treshold cases", () => {
     const board = newBoard();
 
-    expect(() => makeMove(board, players.ONE, 42)).toThrow('Incorrect move position: 42');
-    expect(() => makeMove(board, players.ONE, -1)).toThrow('Incorrect move position: -1');
+    expect(() => makeMove(board, players.ONE, 42)).toThrow(
+      "Incorrect move position: 42"
+    );
+    expect(() => makeMove(board, players.ONE, -1)).toThrow(
+      "Incorrect move position: -1"
+    );
   });
 
-	test('should fail if next row empty', () => {
+  test("should fail if next row empty", () => {
     const board = newBoard();
 
-    expect(() => makeMove(board, players.ONE, 32)).toThrow('Next row is not empty!');
-    expect(() => makeMove(board, players.ONE, 0)).toThrow('Next row is not empty!');
-    expect(() => makeMove(board, players.ONE, 7)).toThrow('Next row is not empty!');
-    expect(() => makeMove(board, players.ONE, 34)).toThrow('Next row is not empty!');
+    expect(() => makeMove(board, players.ONE, 32)).toThrow(
+      "Next row is not empty!"
+    );
+    expect(() => makeMove(board, players.ONE, 0)).toThrow(
+      "Next row is not empty!"
+    );
+    expect(() => makeMove(board, players.ONE, 7)).toThrow(
+      "Next row is not empty!"
+    );
+    expect(() => makeMove(board, players.ONE, 34)).toThrow(
+      "Next row is not empty!"
+    );
   });
-  
-	test('should not fail if not your turn', () => {
+
+  test("should not fail if not your turn", () => {
     let board = newBoard();
 
     board = makeMove(board, players.ONE, 41);
     board = makeMove(board, players.TWO, 35);
     board = makeMove(board, players.ONE, 36);
-	});
-  
-	test('should not fail', () => {
+  });
+
+  test("should not fail", () => {
     let board = newBoard();
 
     board = makeMove(board, players.ONE, 41);
     board = makeMove(board, players.TWO, 40);
     board = makeMove(board, players.ONE, 35);
-	});
-  
-	test('should run a straight game', () => {
+  });
+
+  test("should run a straight game", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -81,14 +93,14 @@ describe('makeMove', () => {
     expect(gameEnd(0, board).isGameEnd).toEqual(false);
     expect(gameEnd(1, board).isGameEnd).toEqual(false);
     expect(gameEnd(2, board).isGameEnd).toEqual(false);
- 
+
     expect(gameEnd(24, board).isGameEnd).toEqual(true);
     expect(gameEnd(27, board).isGameEnd).toEqual(true);
     expect(gameEnd(26, board).isGameEnd).toEqual(true);
     expect(gameEnd(25, board).isGameEnd).toEqual(true);
   });
 
-	test('should run a diagonal game 1', () => {
+  test("should run a diagonal game 1", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -114,7 +126,7 @@ describe('makeMove', () => {
     expect(gameEnd(21, board).isGameEnd).toEqual(true);
   });
 
-	test('should run a diagonal game 2,3', () => {
+  test("should run a diagonal game 2,3", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -145,7 +157,7 @@ describe('makeMove', () => {
     expect(gameEnd(33, board).isGameEnd).toEqual(false);
   });
 
-	test('should run a diagonal game 3,4', () => {
+  test("should run a diagonal game 3,4", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -186,7 +198,7 @@ describe('makeMove', () => {
     expect(gameEnd(33, board).isGameEnd).toEqual(false);
   });
 
-	test('should run a straight game 1', () => {
+  test("should run a straight game 1", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -217,7 +229,7 @@ describe('makeMove', () => {
     expect(gameEnd(33, board).isGameEnd).toEqual(false);
   });
 
-	test('should run a straight game 2', () => {
+  test("should run a straight game 2", () => {
     let board = newBoard();
 
     board.cells = Array.from({ length: CELL_SUM }, (x, i) => {
@@ -248,7 +260,7 @@ describe('makeMove', () => {
     expect(gameEnd(27, board).isGameEnd).toEqual(false);
   });
 
-	test('should run a simple straight win game player 2', () => {
+  test("should run a simple straight win game player 2", () => {
     let board = newBoard();
 
     board = makeMove(board, players.ONE, 41);
@@ -263,8 +275,8 @@ describe('makeMove', () => {
     board = gameEnd(38, board, players.TWO);
     expect(board.isGameEnd).toEqual(true);
   });
-  
-	test('should run a simple straight win game player 1', () => {
+
+  test("should run a simple straight win game player 1", () => {
     let board = newBoard();
 
     board = makeMove(board, players.ONE, 41);
@@ -277,7 +289,7 @@ describe('makeMove', () => {
 
     board = gameEnd(38, board, players.ONE);
     expect(board.isGameEnd).toEqual(true);
-    
-    expect(() => makeMove(board, players.TWO, 29)).toThrow('Game has ended');
-	});
+
+    expect(() => makeMove(board, players.TWO, 29)).toThrow("Game has ended");
+  });
 });

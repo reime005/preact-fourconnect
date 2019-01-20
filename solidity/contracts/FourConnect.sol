@@ -1,4 +1,4 @@
-pragma solidity >=0.4.23 <0.6.0;
+pragma solidity ^0.5.2;
 
 import "./FourConnectCalls.sol";
 
@@ -126,12 +126,19 @@ contract FourConnect is FourConnectCalls {
         onlyInTimeout(gameId)
     {
         Player player = games[gameId].currentPlayer;
-
+/*
+    0   1   2   3   4   5   6
+    7   8   9   10	11	12	13
+    14	15	16	17	18	19	20
+    21	22	23	24	25	26	27
+    28	29	30	31	32	33	34
+    35	36	37	38	39	40	41
+*/
         require(position >= 0 && position <= 41);
         require(games[gameId].board[position] == Player.NONE);
 
-        if (position >= 7){
-            require(games[gameId].board[position - 7] != Player.NONE);
+        if (position <= 34){
+            require(games[gameId].board[position + 7] != Player.NONE);
         }
 
         games[gameId].board[position] = player;
@@ -173,36 +180,33 @@ contract FourConnect is FourConnectCalls {
         }
 
         /*
-        35	36	37	38	39	40	41
-        28	29	30	31	32	33	34
-        21	22	23	24	25	26	27
+        0   1   2   3   4   5   6
+        7   8   9   10	11	12	13
         14	15	16	17	18	19	20
-        7	8	9	10	11	12	13
-        0	1	2	3	4	5	6
+        21	22	23	24	25	26	27
+        28	29	30	31	32	33	34
+        35	36	37	38	39	40	41
         */
 
+        // All moves must be in decreasing order and have the same distance to each other
+        require(moves[0] > moves[1]);
 
-        
-
-        // All moves must be in increasing order and have the same distance to each other
-        require(moves[0] < moves[1]);
-
-        uint8 diff = moves[1] - moves[0];
+        uint8 diff = moves[0] - moves[1];
 
         require(
-            moves[2] - moves[1] == diff &&
-            moves[3] - moves[2] == diff);
+            moves[1] - moves[2] == diff &&
+            moves[2] - moves[3] == diff);
 
         // Check if moves are arranged correctly, because relying to the diff alone
-        // is not enough (example: moves in 2, 8, 14, 20 are not valid)
+        // is not enough (example: moves in 37, 29, 21, 13 are not valid)
         if (diff == 6) {
             // diagonal-left claim. therefore:
             // last id must be further to the left than the first
-            require(moves[3] % 7 < moves[0] % 7);
+            require(moves[3] % 7 > moves[0] % 7);
         } else if (diff == 1 || diff == 8) {
-            // horizontal or diagonal-right claim. therefore:
-            // last id must be further to the right than the first
-            require(moves[0] % 7 < moves[3] % 7);
+            // horizontal or diagonal-left claim. therefore:
+            // last id must be further to the left than the first
+            require(moves[0] % 7 > moves[3] % 7);
         } else if (diff != 7) {
             // vertical moves do not need verification, since it happened in the foor loop
             revert();

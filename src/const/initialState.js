@@ -7,5 +7,5 @@ export const initialGameState = {
   columnSelected: -1,
   currentPlayer: players.NONE,
   playersTurn: false,
-  isGameEnd: false,
-}
+  isGameEnd: false
+};

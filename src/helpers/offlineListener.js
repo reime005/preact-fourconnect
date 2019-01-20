@@ -8,7 +8,7 @@ export class OfflineListener {
   }
 
   onOffline() {
-    this.onChange(false)
+    this.onChange(false);
   }
 
   onOnline() {
@@ -19,7 +19,7 @@ export class OfflineListener {
     this.onChange(window.navigator.onLine);
 
     window.addEventListener("offline", this.onOffline, false);
-		window.addEventListener("online", this.onOnline, false);
+    window.addEventListener("online", this.onOnline, false);
   }
 
   stop() {

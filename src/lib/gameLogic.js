@@ -15,27 +15,25 @@ export const makeMove = (board, player = players.NONE, position = -1) => {
   }
 
   if (board.cells[position] && board.cells[position] !== players.NONE) {
-    throw 'Cell already set';
+    throw "Cell already set";
   }
 
   const nextRowCell = board.cells[position + boardSize.columns];
-  
+
   if (nextRowCell && nextRowCell === players.NONE) {
-    throw 'Next row is not empty!';
+    throw "Next row is not empty!";
   }
 
-  let cells = [
-    ...board.cells,
-  ];
+  let cells = [...board.cells];
 
   cells[position] = player;
 
   return {
     ...board,
     currentPlayer: nextPlayer(player),
-    cells,
-  }
-}
+    cells
+  };
+};
 
 export const makeAIMove = (board, player = players.TWO) => {
   const { cells } = board;
@@ -50,7 +48,7 @@ export const makeAIMove = (board, player = players.TWO) => {
   }
 
   if (position === -1) {
-    throw 'No more empty cells';
+    throw "No more empty cells";
   }
 
   board = makeMove(board, player, position);
@@ -58,7 +56,7 @@ export const makeAIMove = (board, player = players.TWO) => {
   board = gameEnd(position, board, player);
 
   return board;
-}
+};
 
 export const gameEnd = (lastPosition = -1, board) => {
   if (lastPosition < 0 || lastPosition > CELL_SUM) {
@@ -66,86 +64,123 @@ export const gameEnd = (lastPosition = -1, board) => {
   }
 
   const lastPlayer = nextPlayer(board.currentPlayer);
-  
+
   const { cells } = board;
 
   let isGameEnd = false;
   let currentPlayer = board.currentPlayer;
 
   // go to the most left position --> straight horizontal check
-  const getMostLeftPosition = (lastPosition) => {
+  const getMostLeftPosition = lastPosition => {
     while (lastPosition % boardSize.columns !== 0) {
       lastPosition--;
     }
 
     return lastPosition;
-  }
+  };
 
   // go to the most bottom positon --> straight vertical check
-  const getMostBottomPositon = (lastPosition) => {
+  const getMostBottomPositon = lastPosition => {
     const cols = boardSize.columns;
 
     while (lastPosition + cols < CELL_SUM) {
       lastPosition += cols;
     }
-    
+
     return lastPosition;
-  }
+  };
 
   // go to the most bottom left position --> right diagonal check
-  const getMostBottomLeftPositon = (lastPosition) => {
+  const getMostBottomLeftPositon = lastPosition => {
     const cols = boardSize.columns;
 
-    while (lastPosition + cols < CELL_SUM && lastPosition % boardSize.columns !== 0) {
+    while (
+      lastPosition + cols < CELL_SUM &&
+      lastPosition % boardSize.columns !== 0
+    ) {
       lastPosition += cols;
       lastPosition -= 1;
     }
-    
+
     return lastPosition;
-  }
+  };
 
   // go to the most bottom right position --> left diagonal check
-  const getMostBottomRightPositon = (lastPosition) => {
+  const getMostBottomRightPositon = lastPosition => {
     const cols = boardSize.columns;
 
-    while (lastPosition + cols < CELL_SUM && (lastPosition + 1) % boardSize.columns !== 0) {
+    while (
+      lastPosition + cols < CELL_SUM &&
+      (lastPosition + 1) % boardSize.columns !== 0
+    ) {
       lastPosition += cols;
       lastPosition += 1;
     }
-    
+
     return lastPosition;
-  }
+  };
 
   if (_checkHasWon(cells, 1, getMostLeftPosition(lastPosition), lastPlayer)) {
     isGameEnd = true;
-  } else if (_checkHasWon(cells, -boardSize.columns, getMostBottomPositon(lastPosition), lastPlayer)) {
+  } else if (
+    _checkHasWon(
+      cells,
+      -boardSize.columns,
+      getMostBottomPositon(lastPosition),
+      lastPlayer
+    )
+  ) {
     isGameEnd = true;
-  }  else if (_checkHasWonDiagonal(1, -boardSize.columns, cells, getMostBottomLeftPositon(lastPosition), lastPlayer)) {
+  } else if (
+    _checkHasWonDiagonal(
+      1,
+      -boardSize.columns,
+      cells,
+      getMostBottomLeftPositon(lastPosition),
+      lastPlayer
+    )
+  ) {
     isGameEnd = true;
-  } else if (_checkHasWonDiagonal(-1, -boardSize.columns, cells, getMostBottomRightPositon(lastPosition), lastPlayer)) {
+  } else if (
+    _checkHasWonDiagonal(
+      -1,
+      -boardSize.columns,
+      cells,
+      getMostBottomRightPositon(lastPosition),
+      lastPlayer
+    )
+  ) {
     isGameEnd = true;
-  } 
-  
+  }
+
   if (isGameEnd) {
     currentPlayer = nextPlayer(lastPlayer);
   }
-  
-  return { ...board, isGameEnd, currentPlayer };
-}
 
-const _checkHasWonDiagonal = (incrementX, incrementY, cells = {}, lastPosition = -1, player) => {
+  return { ...board, isGameEnd, currentPlayer };
+};
+
+const _checkHasWonDiagonal = (
+  incrementX,
+  incrementY,
+  cells = {},
+  lastPosition = -1,
+  player
+) => {
   if (incrementX != 1 && incrementX != -1) {
     throw 'Diagonal increment for X must either be "-1" or "1"';
   }
 
   if (incrementY !== boardSize.columns && incrementY !== -boardSize.columns) {
-    throw `Diagonal increment for Y must either be "${boardSize.columns} or "-${boardSize.columns}`;
+    throw `Diagonal increment for Y must either be "${boardSize.columns} or "-${
+      boardSize.columns
+    }`;
   }
 
   const increment = incrementX + incrementY;
 
   return _checkHasWon(cells, increment, lastPosition, player);
-}
+};
 
 const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
   const cellsToCheck = [];
@@ -165,7 +200,7 @@ const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
     if ((i + 1) % boardSize.columns === 0 && increment === 1) {
       break;
     }
-  
+
     i += increment;
   }
 
@@ -174,8 +209,7 @@ const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
   }
 
   return _checkIndicesValid(player, cellsToCheck);
-}
+};
 
-const _checkIndicesValid = (player, indices = []) => 
+const _checkIndicesValid = (player, indices = []) =>
   indices.reduce((sum, i) => sum + (i === player ? 1 : 0), 0) === 4;
-

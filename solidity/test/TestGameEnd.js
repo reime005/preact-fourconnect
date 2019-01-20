@@ -8,12 +8,12 @@ import { FourConnect, payment, paymentOne, paymentTwo } from './constants';
 import { BigNumber } from 'bignumber.js';
 
 /*
-    35	36	37	38	39	40	41
-    28	29	30	31	32	33	34
-    21	22	23	24	25	26	27
+    0   1   2   3   4   5   6
+    7   8   9   10	11	12	13
     14	15	16	17	18	19	20
-    7	8	9	10	11	12	13
-    0	1	2	3	4	5	6
+    21	22	23	24	25	26	27
+    28	29	30	31	32	33	34
+    35	36	37	38	39	40	41
 */
 contract('FourConnect', async (accounts) => {
     it('should not let someone give up when the game has not started', async () => {
@@ -99,7 +99,7 @@ contract('FourConnect', async (accounts) => {
         const expected = new BigNumber(balAcc6Post).plus(new BigNumber(gasCost)).minus(new BigNumber(payment));
 
         await assert.strictEqual(
-            expected, 
+            expected.toString(), 
             balAcc6Pre
         );
     });
@@ -114,7 +114,7 @@ contract('FourConnect', async (accounts) => {
 
         const id = await createAndJoinGame(instance, paymentOne, paymentTwo, accounts[5], accounts[6]);
         
-        await expectEvent(instance.makeMove(id, 0, {from: accounts[5]}), "logGameMoveMade");
+        await expectEvent(instance.makeMove(id, 35, {from: accounts[5]}), "logGameMoveMade");
 
         await increaseTimeSeconds(60 * 61);
 
