@@ -66,7 +66,7 @@ export class FourConnectListener {
     });
   }
 
-  public async callMethod(methodName: string, boardId: number): Promise<any> {
+  public async callMethod(methodName: string, ...args: any[]): Promise<any> {
     return new Promise<any>(async (res, rej) => {
       if (!this.drizzle) {
         rej('No drizzle');
@@ -77,8 +77,10 @@ export class FourConnectListener {
 
       // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
       if (state.drizzleStatus.initialized && this.drizzle.contracts.FourConnect.methods[methodName]) {
-        const dataKey = this.drizzle.contracts.FourConnect.methods[methodName].cacheCall(boardId);
-
+        const dataKey = this.drizzle.contracts.FourConnect.methods[methodName].cacheCall(...args);
+        console.warn(this.drizzle.contracts.FourConnect.methods[methodName]);
+        console.warn(...args);
+        
         await delay(4000);
         state = this.drizzle.store.getState();
 

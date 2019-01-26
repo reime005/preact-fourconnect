@@ -6,10 +6,11 @@ import drizzleOptions from "../../const/drizzleOptions";
 import getWeb3 from "../../helpers/web3/getWeb3";
 import { delay } from "core-js";
 import FourConnectListener from "../../helpers/web3/FourConnectListener";
+import { Board } from "../../components/board/board";
 
 class Web3 extends Component {
   state = {
-    board: []
+    cells: []
   };
 
   constructor(props) {
@@ -122,7 +123,7 @@ class Web3 extends Component {
   async getState() {
     try {
       this.setState({
-        board: await this.fourConnectListener.callMethod("getBoard", 0)
+        cells: await this.fourConnectListener.callMethod("getBoard", 0)
       });
     } catch (e) {
       console.warn(e);
@@ -147,7 +148,7 @@ class Web3 extends Component {
     }, 500);
   }
 
-  render({}, { initialized, methods, accounts, board }) {
+  render({}, { initialized, methods, accounts, cells }) {
     return (
       <div style={{ paddingTop: 65, flex: 1 }}>
         <h1>{initialized ? "initialized" : "..."}</h1>
@@ -159,7 +160,19 @@ class Web3 extends Component {
         <button onClick={() => this.joinGame(0)}>join</button>
         <button onClick={() => this.makeMove(0)}>makeMove</button>
 
-        <p>{board && JSON.stringify(board)}</p>
+        {cells && (
+          <div>
+            <p>{JSON.stringify(cells)}</p>
+
+            <Board
+              cells={cells}
+              onClick={this.makeMove}
+              rowsCount={7}
+              playersTurn={true}
+              onMouseOver={() => {}}
+            />
+          </div>
+        )}
       </div>
     );
   }

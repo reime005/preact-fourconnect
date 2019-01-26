@@ -8,7 +8,7 @@ import Home from "../routes/home";
 import Profile from "../routes/profile";
 import Game from "../routes/game";
 import { OfflineListener } from "../helpers/offlineListener";
-import Web3 from "../routes/web3";
+import Web3 from "../routes/web3/index";
 
 export default class App extends Component {
   constructor(props) {
@@ -29,13 +29,13 @@ export default class App extends Component {
     });
     this.offlineListener.start();
 
-    let board = JSON.parse(localStorage.getItem("fourconnect.board"));
-    console.warn(board);
+    // let board = JSON.parse(localStorage.getItem("fourconnect.board"));
+    // console.warn(board);
 
-    if (!board.isGameEnd && board.cells) {
-      // route('/game');
-      this.setState({ isRunning: true });
-    }
+    // if (!board.isGameEnd && board.cells) {
+    //   // route('/game');
+    //   this.setState({ isRunning: true });
+    // }
   }
 
   componentWillUnmount() {

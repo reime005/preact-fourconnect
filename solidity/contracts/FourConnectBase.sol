@@ -39,6 +39,7 @@ contract FourConnectBase is Ownable {
     /*** VARIABLES ***/
 
     mapping (uint => Game) internal games;
+    mapping (address => uint[]) internal joinedGames;
     
     uint internal currentUID;
 

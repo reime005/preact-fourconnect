@@ -21,7 +21,7 @@ export const colors = {
 };
 
 export const players = {
-  NONE: -1,
+  NONE: 0,
   ONE: 1,
   TWO: 2
 };

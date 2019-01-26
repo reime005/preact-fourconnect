@@ -1,5 +1,7 @@
 pragma solidity ^0.5.2;
 
+pragma experimental ABIEncoderV2;
+
 import "./FourConnectModifiers.sol";
 
 /// @title Contract for a Connect Four Game
@@ -7,6 +9,14 @@ import "./FourConnectModifiers.sol";
 /// @notice 
 /// @dev This contract contains only external view / call methods
 contract FourConnectCalls is FourConnectModifiers {
+
+    function getPlayersIds(address player) 
+        external 
+        view
+        returns (uint[] memory) {
+        require(player != address(0));
+        return joinedGames[player];
+    }
     
     function getBoard(uint gameId) 
         external 
@@ -29,7 +39,7 @@ contract FourConnectCalls is FourConnectModifiers {
         onlyWhenGameExists(0)
         returns (uint) {
         for (uint i = 0; i <= currentUID; ++i) {
-            if (games[i].running == false &&
+            if (games[i].running == false && 
                 games[i].winner == address(0) && 
                 games[i].exclusive == false) {
                 return i;
@@ -63,16 +73,16 @@ contract FourConnectCalls is FourConnectModifiers {
         return games[gameId].creationTime;
     }
 
-    function getMaxMoveTimeout() 
+    function getMaxMoveTimeout()
+        external 
         pure 
-        external
         returns (uint) {
         return MAX_MOVE_TIMEOUT;
     }
 
     function getMaxCreationTimeout() 
-        pure 
         external 
+        pure 
         returns (uint) {
         return MAX_CREATION_TIMEOUT;
     }

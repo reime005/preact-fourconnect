@@ -1,6 +1,6 @@
 import { h, Component } from "preact";
 import style from "./style";
-import Board from "../board";
+import Board from "../board/board.tsx";
 import { players, CELL_SUM, boardSize } from "../../const/boardConfig";
 import { nextPlayer } from "../../lib/nextPlayer";
 import { makeMove, gameEnd, makeAIMove } from "../../lib/gameLogic";
@@ -11,9 +11,10 @@ import { newBoard } from "../../lib/newBoard";
 
 class GameView extends Component {
   async _resetState() {
-    let board = JSON.parse(localStorage.getItem("fourconnect.board"));
+    let board = null; //JSON.parse(localStorage.getItem("fourconnect.board"));
 
-    if (board.isGameEnd) {
+    if (board && board.isGameEnd) {
+      console.warn("done");
       board = null;
     }
 
