@@ -1,4 +1,5 @@
 import { Component, h } from 'preact';
+// import Web3 from "web3";
 
 // import { Button } from 'preact-material-components/ts/Button';
 // import 'preact-material-components/Button/style.css';
@@ -14,6 +15,9 @@ type Props = {
 }
 
 type State = {
+  web3: any,
+  opponentsAddress: string,
+  createGameBidEth: string,
   joinGameBidEth: string,
   joinGameId: number,
   selectedGameId: number,
@@ -24,15 +28,19 @@ type State = {
   gameIds: any[],
 }
 
-class Web3 extends Component<Props, State> {
+class Web3Route extends Component<Props, State> {
   fourConnectListener: FourConnectListener;
   poll: any;
   joinGameDialogRef: any;
+  newRestrictedGame: any;
 
   constructor(props) {
     super(props);
 
     this.state = {
+      web3: null,
+      opponentsAddress: '',
+      createGameBidEth: '',
       joinGameBidEth: '',
       joinGameId: -1,
       selectedGameId: -1,
@@ -79,7 +87,7 @@ class Web3 extends Component<Props, State> {
 
     const accounts = await web3.eth.getAccounts() || [];
 
-    this.setState({ accounts, initialized: true });
+    this.setState({ web3, accounts, initialized: true });
   }
 
   private async createGame() {
@@ -101,6 +109,26 @@ class Web3 extends Component<Props, State> {
       await this.fourConnectListener.cacheSend('joinGame', openGameId, {
         from: this.state.accounts[0]
       });
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  public async newGame() {
+    try {
+      const { web3, opponentsAddress, createGameBidEth }: State = this.state;
+
+      if (opponentsAddress) {
+        await this.fourConnectListener.cacheSend('newRestrictedGame', opponentsAddress, createGameBidEth, {
+          from: this.state.accounts[0],
+          value: web3.utils.toWei(createGameBidEth, 'ether')
+        });
+      } else {
+        await this.fourConnectListener.cacheSend('newGame', {
+          from: this.state.accounts[0],
+          value: web3.utils.toWei(createGameBidEth, 'ether')
+        });
+      }
     } catch (e) {
       console.warn(e);
     }
@@ -223,11 +251,29 @@ class Web3 extends Component<Props, State> {
           inputTexts={{
             gameId: {
               label: 'Specific Game ID? (optional)',
-              onKeyUp: (joinGameId => this.setState({ joinGameId: Number(joinGameId) })),
+              onKeyUp: joinGameId => this.setState({ joinGameId: Number(joinGameId) }),
             },
             payment: {
               label: 'Your bid? (in ETH)',
-              onKeyUp: (joinGameBidEth => this.setState({ joinGameBidEth })),
+              onKeyUp: joinGameBidEth => this.setState({ joinGameBidEth }),
+            },
+          }}
+        />
+
+        <Dialog
+          setRef={newRestrictedGame => this.newRestrictedGame=newRestrictedGame }
+          acceptText={'New restricted game'}
+          declineText={'Cancel'}
+          onAccept={this.newGame}
+          headerText={'Create a new Game'}
+          inputTexts={{
+            gameId: {
+              label: 'Opponent\' address? (optional)',
+              onKeyUp: opponentsAddress => this.setState({ opponentsAddress }),
+            },
+            payment: {
+              label: 'Your bid? (in ETH) (optional)',
+              onKeyUp: createGameBidEth => this.setState({ createGameBidEth }),
             },
           }}
         />
@@ -236,4 +282,4 @@ class Web3 extends Component<Props, State> {
   }
 }
 
-export default Web3;
+export default Web3Route;

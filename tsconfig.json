@@ -3,9 +3,9 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "./dist",
-		"target": "es6",
+		"target": "es5",
 		"moduleResolution": "node",
-		"module": "commonjs",
+		"module": "esnext",
 		"noImplicitAny": false,
 		"removeComments": true,
 		"strict": true,
@@ -14,16 +14,26 @@
 		"jsxFactory": "h",
 		"allowJs": true,
 		"experimentalDecorators": true,
+		"noFallthroughCasesInSwitch": true,
+		"strictNullChecks": false,
+		"lib": [
+			"dom",
+			"es5",
+			"es6",
+		],
+		"skipLibCheck": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"baseUrl": ".",
 	},
 	"suppressImplicitAnyIndexErrors": true,
-	"lib": [
-		"dom",
-		"es6"
-	],
-	"baseUrl": ".",
 	"exclude": [
-		"dist"
+		"dist",
+		"node_modules"
 	],
+	"awesomeTypescriptLoaderOptions": {
+		"useBabel": true,
+		"useCache": true,
+	},
 	"include": [
 		"node_modules/@types"
 	]
