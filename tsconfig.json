@@ -25,7 +25,6 @@
 		"suppressImplicitAnyIndexErrors": true,
 		"baseUrl": ".",
 	},
-	"suppressImplicitAnyIndexErrors": true,
 	"exclude": [
 		"dist",
 		"node_modules"

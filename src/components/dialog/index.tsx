@@ -51,7 +51,7 @@ export class Dialog extends Component<Props, State> {
                       <TextField
                         label={inputTexts[key].label}
                         onKeyUp={(e: any) => {
-                          inputTexts[key].onKeyUp(e.target.value)
+                          inputTexts[key].onKeyUp(new String(e.target.value).trim())
                         }}
                       />
                       {" "}

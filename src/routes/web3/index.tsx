@@ -9,12 +9,14 @@ import drizzleOptions from '../../const/drizzleOptions';
 import FourConnectListener from '../../helpers/web3/FourConnectListener';
 import { Selector } from '../../components/selector';
 import { Dialog } from '../../components/dialog';
+import { getBoardData } from '../../helpers/web3/getBoardData';
 
 type Props = {
 
 }
 
 type State = {
+  columnSelected: number,
   web3: any,
   opponentsAddress: string,
   createGameBidEth: string,
@@ -24,8 +26,21 @@ type State = {
   stackId: number,
   accounts: any[],
   initialized: boolean,
-  cells: Object,
+  games: {
+    [gameId: number]: {
+      cells: number[],
+      running: boolean,
+      lastTimePlayed: Date,
+      playerOne: string,
+      playerTwo: string
+      currentPlayer: number,
+      bidPlayerOne: number,
+      bidPlayerTwo: number,
+    }
+  },
   gameIds: any[],
+  maxCreationTimeout: number,
+  maxMoveTimeout: number,
 }
 
 class Web3Route extends Component<Props, State> {
@@ -38,7 +53,10 @@ class Web3Route extends Component<Props, State> {
     super(props);
 
     this.state = {
-      web3: null,
+      maxCreationTimeout: 0,
+      maxMoveTimeout: 0,
+      columnSelected: 0,
+      web3: {},
       opponentsAddress: '',
       createGameBidEth: '',
       joinGameBidEth: '',
@@ -46,7 +64,7 @@ class Web3Route extends Component<Props, State> {
       selectedGameId: -1,
       stackId: 0x0,
       accounts: [],
-      cells: {},
+      games: {},
       gameIds: [],
       initialized: false,
     }
@@ -57,7 +75,7 @@ class Web3Route extends Component<Props, State> {
     
     // this.startPolling = this.startPolling.bind(this);
     this.initialize = this.initialize.bind(this);
-    this.createGame = this.createGame.bind(this);
+    this.newGame = this.newGame.bind(this);
     this.retrieve = this.retrieve.bind(this);
     this.getState = this.getState.bind(this);
     this.joinGame = this.joinGame.bind(this);
@@ -77,34 +95,30 @@ class Web3Route extends Component<Props, State> {
       return;
     }
 
-    let web3;
+    let web3, maxCreationTimeout, maxMoveTimeout;
 
     try {
-      web3 = await this.fourConnectListener.start();
+      const data = await this.fourConnectListener.start();
+
+      web3 = data.web3;
+      maxCreationTimeout = data.maxCreationTimeout,
+      maxMoveTimeout = data.maxMoveTimeout;
     } catch (e) {
       console.error(e);
     }
 
     const accounts = await web3.eth.getAccounts() || [];
 
-    this.setState({ web3, accounts, initialized: true });
-  }
-
-  private async createGame() {
-    try {
-      const stackId = await this.fourConnectListener.cacheSend('newGame', {
-        from: this.state.accounts[0]
-      });
-
-      this.setState({ stackId });
-    } catch (e) {
-      console.warn(e);
-    }
+    this.setState({ web3, accounts, initialized: true, maxCreationTimeout, maxMoveTimeout });
   }
 
   public async joinGame() {
     try {
       const openGameId = await this.fourConnectListener.callMethod('getOpenGameId');
+      this.fourConnectListener.subscribeEvent('logGameStarted', (error: any, evt: any) => {
+        console.warn(evt);
+      },
+      {filter: { gameId: [new String(openGameId)] }})
 
       await this.fourConnectListener.cacheSend('joinGame', openGameId, {
         from: this.state.accounts[0]
@@ -119,14 +133,14 @@ class Web3Route extends Component<Props, State> {
       const { web3, opponentsAddress, createGameBidEth }: State = this.state;
 
       if (opponentsAddress) {
-        await this.fourConnectListener.cacheSend('newRestrictedGame', opponentsAddress, createGameBidEth, {
+        await this.fourConnectListener.cacheSend('newRestrictedGame', opponentsAddress, {
           from: this.state.accounts[0],
-          value: web3.utils.toWei(createGameBidEth, 'ether')
+          value: web3.utils.toWei(createGameBidEth || '0', 'ether')
         });
       } else {
         await this.fourConnectListener.cacheSend('newGame', {
           from: this.state.accounts[0],
-          value: web3.utils.toWei(createGameBidEth, 'ether')
+          value: web3.utils.toWei(createGameBidEth || '0', 'ether')
         });
       }
     } catch (e) {
@@ -134,7 +148,7 @@ class Web3Route extends Component<Props, State> {
     }
   }
 
-  public async makeMove(id) {
+  public async makeMove(id: number) {
     try {
       const stackId = await this.fourConnectListener.cacheSend(
         'makeMove',
@@ -168,7 +182,7 @@ class Web3Route extends Component<Props, State> {
 
       gameIds = gameIds.map((gameId: string) => Number(gameId));
 
-      let cells = {};
+      let games = {};
 
       this.setState({
         selectedGameId: 0,
@@ -177,16 +191,12 @@ class Web3Route extends Component<Props, State> {
       
       gameIds.forEach(async gameId => {
         try {
-          let gameIdCells: any[] = await this.fourConnectListener.callMethod('getBoard', gameId);
+          const game = await getBoardData(this.fourConnectListener, gameId);
+          games[gameId] = {...games[gameId], ...game };
 
-          if (gameIdCells.length) {
-            gameIdCells = gameIdCells.map(cell => Number(cell));
-            cells[gameId] = [...gameIdCells];
-
-            this.setState({
-              cells,
-            });
-          }
+          this.setState({
+            games,
+          });
         } catch (error) {
           console.warn(error);
         }
@@ -196,14 +206,16 @@ class Web3Route extends Component<Props, State> {
     }
   }
 
-  public render({}, { initialized, accounts, cells, gameIds, selectedGameId }: State) {
+  public render({}, { initialized, accounts, games, gameIds, selectedGameId, columnSelected }: State) {
     return (
       <div style={{ paddingTop: 65, flex: 1 }}>
         <h1>{initialized ? 'initialized' : '...'}</h1>
         <h1>{initialized && accounts ? accounts[0] : ''}</h1>
 
         <button onClick={() => this.getState()}>state</button>
-        <button onClick={() => this.createGame()}>create new game</button>
+        {/* <button onClick={() => this.createGame()}>create new game</button> */}
+        <button onClick={() => {}}>claim timeout win</button>
+        <button onClick={() => this.newRestrictedGame.MDComponent.show()}>new game</button>
         <button onClick={() => this.joinGameDialogRef.MDComponent.show()}>join</button>
         <button onClick={() => this.makeMove(0)}>makeMove</button>
 
@@ -227,13 +239,13 @@ class Web3Route extends Component<Props, State> {
           : null
         }
 
-        {cells != {} ?
+        {games != {} ?
           <div>
-            <p>{JSON.stringify(cells)}</p>
+            <p>{JSON.stringify(games)}</p>
 
             <Board
-              cells={cells[0] || []}
-              columnSelected={5}
+              cells={games[selectedGameId] ? games[selectedGameId].cells : []}
+              columnSelected={columnSelected}
               onClick={(i: number) => console.warn(i)}
               playersTurn={true}
               onMouseOver={() => {}}
