@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "await-delay": "^1.0.0",
+    "bignumber.js": "^8.0.2",
     "drizzle": "^1.2.4",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",

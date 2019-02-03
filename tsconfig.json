@@ -34,6 +34,7 @@
 		"useCache": true,
 	},
 	"include": [
-		"node_modules/@types"
+		"node_modules/@types",
+		"src/const"
 	]
 }

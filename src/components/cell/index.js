@@ -23,7 +23,6 @@ class Cell extends Component {
   }
 
   render({ i, columnIsSelected, player, column }) {
-    console.warn(player);
     return (
       <div
         key={`cell-${i}`}

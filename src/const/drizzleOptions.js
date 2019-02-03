@@ -11,4 +11,12 @@ const drizzleOptions = {
   }
 };
 
+export const fourConnectEvents = [
+  "logGameInitialized",
+  "logGameStarted",
+  "logGameMoveMade",
+  "logGameCanceled",
+  "logGameEnd"
+];
+
 export default drizzleOptions;

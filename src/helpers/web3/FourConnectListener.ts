@@ -58,13 +58,16 @@ export class FourConnectListener {
         while (state.drizzleStatus && !state.drizzleStatus.initialized) {
           state = this.drizzle && this.drizzle.store.getState();
 
-          await delay(1000);
+          await delay(500);
         }
 
         if (state.drizzleStatus && state.drizzleStatus.initialized!) {
           const maxCreationTimeout = await this.callMethod('getMaxCreationTimeout');
           const maxMoveTimeout = await this.callMethod('getMaxMoveTimeout');
 
+          console.warn(web3);
+          
+          
           res({ web3, maxCreationTimeout, maxMoveTimeout });
         } else {
           rej('Error');
@@ -85,16 +88,17 @@ export class FourConnectListener {
       this.unsubscribeEvent(eventName);
     }
 
-    events[eventName]({ ...args }, (error: any, evt: any) => {
-      if (args.filter) {
-        Object.keys(args.filter).forEach(key => {
-          if (args.filter[key].includes(evt.returnValues[key])) {
-            callback(error, evt);
-          }
-        })
-      } else {
-        callback(error, evt);
-      }
+    events[eventName]({ ...args })
+    .on('data', (evt) => {
+        if (args.filter) {
+          Object.keys(args.filter).forEach(key => {
+            if (args.filter[key].includes(evt.returnValues[key])) {
+              callback(null, evt);
+            }
+          })
+        } else {
+          callback(null, evt);
+        }
     });
     
     this.eventSubscriptions[eventName] = eventName;

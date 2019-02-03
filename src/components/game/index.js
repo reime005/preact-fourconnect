@@ -8,6 +8,7 @@ import { GameEnd } from "../gameend";
 import { initialGameState } from "../../const/initialState";
 import { delay } from "core-js";
 import { newBoard } from "../../lib/newBoard";
+import { nextFreeCell } from "../../lib/nextFreeCell";
 
 class GameView extends Component {
   async _resetState() {
@@ -72,20 +73,6 @@ class GameView extends Component {
   }
 
   async onCellClick(column) {
-    const nextFreeCell = (column, board) => {
-      for (
-        let i = CELL_SUM - boardSize.columns + column;
-        i >= 0;
-        i -= boardSize.columns
-      ) {
-        if (board.cells[i] === players.NONE) {
-          return i;
-        }
-      }
-
-      throw "No empty cells in this column";
-    };
-
     await delay(150);
 
     try {
