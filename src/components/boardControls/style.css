@@ -1,0 +1,6 @@
+.container {
+	display: grid;
+	flex-direction: row;
+	margin: 50;
+  grid-template-columns: auto auto auto auto auto auto;
+}

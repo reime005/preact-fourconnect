@@ -17980,12 +17980,12 @@
     "1337": {
       "events": {},
       "links": {},
-      "address": "0xB8D08A1C738Ef7B3ad5B2713C1d3494e75031137",
-      "transactionHash": "0xb346a5a9b4e6e22ea6eb1b53b116216fd50d1d61169b453b9691b75e9787bd37"
+      "address": "0xEC471f2cA77f148C4012b15F07F2392af043dC4C",
+      "transactionHash": "0xd077056db14fb77a0dd47d8bfd6f0778abbd26ef3dc2804eb12ec7694283b8e8"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-02T15:23:44.375Z",
+  "updatedAt": "2019-02-10T00:18:50.700Z",
   "devdoc": {
     "author": "Marius Reimer",
     "details": "This is the core contract",

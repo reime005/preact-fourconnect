@@ -8,10 +8,10 @@
   "rules": {
     "interface-name": false,
     "quotemark": [
-     true,
-     "single"
+      true,
+      "single"
     ],
     "semicolon": true,
     "no-console": false,
-  }
+  },
 }

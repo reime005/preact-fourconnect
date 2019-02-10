@@ -1,8 +1,9 @@
-import { Drizzle, generateStore } from 'drizzle';
-import { delay } from '../delay';
-import getWeb3 from './getWeb3';
+import { Drizzle, generateStore } from "drizzle";
+import { delay } from "../delay";
+import getWeb3 from "./getWeb3";
+import Web3 from "web3/types";
 
-type GameMode = 'new' | 'old';
+type GameMode = "new" | "old";
 
 interface Options {
   gameMode: GameMode;
@@ -17,68 +18,86 @@ interface Props {
 export class FourConnectListener {
   private pollForChangesId: any;
   private drizzle: Drizzle;
+  private web3: Web3;
   private options: Options;
   private eventSubscriptions: {
-    [eventName: string]: string
-  }
-  
+    [eventName: string]: string;
+  };
+
   constructor(props: Props) {
     this.options = props.options;
     this.eventSubscriptions = {};
     this._pollForChanges();
   }
 
-  public async start(): Promise<{ web3: any, maxCreationTimeout: number, maxMoveTimeout: number }> {
+  public async start(): Promise<{
+    web3: any;
+    maxCreationTimeout: number;
+    maxMoveTimeout: number;
+  }> {
     return new Promise<any>(async (res, rej) => {
       if (!this.drizzle) {
-        let web3 = null;
+        this.web3 = null;
 
         try {
-          web3 = await getWeb3();
+          this.web3 = await getWeb3();
         } catch (e) {
-          rej(e);
+          // rej(e);
         }
 
-        if (!web3) {
-          rej('No Web3 Instance');
+        if (!this.web3) {
+          rej("No Web3 Instance");
           return;
         }
 
         const drizzleStore = generateStore(this.options.drizzleOptions);
         this.drizzle = new Drizzle(this.options.drizzleOptions, drizzleStore);
 
-        await delay(1000);
-
         let state = {
           drizzleStatus: {
-            initialized: false,
+            initialized: false
           }
-        }; 
-        
+        };
+
         while (state.drizzleStatus && !state.drizzleStatus.initialized) {
           state = this.drizzle && this.drizzle.store.getState();
 
-          await delay(500);
+          await delay(2000);
         }
 
-        if (state.drizzleStatus && state.drizzleStatus.initialized!) {
-          const maxCreationTimeout = await this.callMethod('getMaxCreationTimeout');
-          const maxMoveTimeout = await this.callMethod('getMaxMoveTimeout');
+        
 
-          console.warn(web3);
-          
-          
-          res({ web3, maxCreationTimeout, maxMoveTimeout });
+        if (state.drizzleStatus && state.drizzleStatus.initialized) {
+          const maxCreationTimeout = await this.callMethod(
+            "getMaxCreationTimeout"
+          );
+          const maxMoveTimeout = await this.callMethod("getMaxMoveTimeout");
+
+          console.warn(maxMoveTimeout);
+          res({ web3: this.web3, maxCreationTimeout, maxMoveTimeout });
         } else {
-          rej('Error');
+          rej("Error");
         }
       }
     });
   }
 
-  public subscribeEvent(eventName: string, callback: (error: any, evt: any) => void, args: any = {}) {
-    const state = this.drizzle && this.drizzle.store && this.drizzle.store.getState();
-    const events = this.drizzle && this.drizzle.contracts && this.drizzle.contracts.FourConnect && this.drizzle.contracts.FourConnect.events;
+  public getWeb3() {
+    return this.web3;
+  }
+
+  public subscribeEvent(
+    eventName: string,
+    callback: (error: any, evt: any) => void,
+    args: any = {}
+  ) {
+    const state =
+      this.drizzle && this.drizzle.store && this.drizzle.store.getState();
+    const events =
+      this.drizzle &&
+      this.drizzle.contracts &&
+      this.drizzle.contracts.FourConnect &&
+      this.drizzle.contracts.FourConnect.events;
 
     if (!state || !state.drizzleStatus.initialized || !events[eventName]) {
       return;
@@ -88,19 +107,18 @@ export class FourConnectListener {
       this.unsubscribeEvent(eventName);
     }
 
-    events[eventName]({ ...args })
-    .on('data', (evt) => {
-        if (args.filter) {
-          Object.keys(args.filter).forEach(key => {
-            if (args.filter[key].includes(evt.returnValues[key])) {
-              callback(null, evt);
-            }
-          })
-        } else {
-          callback(null, evt);
-        }
+    events[eventName]({ ...args }).on("data", evt => {
+      if (args.filter) {
+        Object.keys(args.filter).forEach(key => {
+          if (args.filter[key].includes(evt.returnValues[key])) {
+            callback(null, evt);
+          }
+        });
+      } else {
+        callback(null, evt);
+      }
     });
-    
+
     this.eventSubscriptions[eventName] = eventName;
   }
 
@@ -121,20 +139,29 @@ export class FourConnectListener {
   public async callMethod(methodName: string, ...args: any[]): Promise<any> {
     return new Promise<any>(async (res, rej) => {
       if (!this.drizzle) {
-        rej('No drizzle');
+        rej("No drizzle");
         return;
       }
 
-      let state = this.drizzle && this.drizzle.store && this.drizzle.store.getState();
+      let state =
+        this.drizzle && this.drizzle.store && this.drizzle.store.getState();
 
       // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
-      if (state.drizzleStatus.initialized && this.drizzle.contracts.FourConnect.methods[methodName]) {
-        const dataKey = this.drizzle.contracts.FourConnect.methods[methodName].cacheCall(...args);
+      if (
+        state.drizzleStatus.initialized &&
+        this.drizzle.contracts.FourConnect.methods[methodName]
+      ) {
+        const dataKey = this.drizzle.contracts.FourConnect.methods[
+          methodName
+        ].cacheCall(...args);
         // console.warn(this.drizzle.contracts.FourConnect.methods[methodName]);
         // console.warn(...args);
-        
-        await delay(1000);
-        state = this.drizzle.store.getState();
+
+        while (
+          !state.contracts.FourConnect[methodName][dataKey]) {
+          state = this.drizzle.store.getState();
+          await delay(100);
+        }
 
         if (
           state.contracts.FourConnect[methodName] &&
@@ -142,21 +169,22 @@ export class FourConnectListener {
         ) {
           res(state.contracts.FourConnect[methodName][dataKey].value || []);
           return;
-        } 
+        }
       }
 
-      rej();
+      rej('callMethod issue');
     });
   }
 
   public async getStatus(stackId: number): Promise<string> {
     return new Promise<string>(async (res, rej) => {
       if (!this.drizzle) {
-        rej('No drizzle');
+        rej("No drizzle");
         return;
       }
 
-      const state = this.drizzle && this.drizzle.store && this.drizzle.store.getState();
+      const state =
+        this.drizzle && this.drizzle.store && this.drizzle.store.getState();
 
       if (state.drizzleStatus.initialized) {
         if (state.transactionStack[stackId]) {
@@ -164,7 +192,7 @@ export class FourConnectListener {
 
           res(state.transactions[txHash].status);
         } else {
-          rej('StackID not available');
+          rej("StackID not available");
         }
       }
     });
@@ -173,15 +201,23 @@ export class FourConnectListener {
   public async cacheSend(methodName: string, ...args: any[]): Promise<any> {
     return new Promise<any>(async (res, rej) => {
       if (!this.drizzle) {
-        rej('No drizzle');
+        rej("No drizzle");
         return;
       }
 
-      const state = this.drizzle && this.drizzle.store && this.drizzle.store.getState();
+      const state =
+        this.drizzle && this.drizzle.store && this.drizzle.store.getState();
 
       // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
-      if (state.drizzleStatus.initialized && this.drizzle.contracts.FourConnect.methods[methodName]) {
-        res(this.drizzle.contracts.FourConnect.methods[methodName].cacheSend(...args));
+      if (
+        state.drizzleStatus.initialized &&
+        this.drizzle.contracts.FourConnect.methods[methodName]
+      ) {
+        res(
+          this.drizzle.contracts.FourConnect.methods[methodName].cacheSend(
+            ...args
+          )
+        );
         return;
       }
 
@@ -190,7 +226,7 @@ export class FourConnectListener {
   }
 
   public async stop(): Promise<any> {
-    return new Promise((res) => {
+    return new Promise(res => {
       if (!this.pollForChangesId) {
         clearInterval(this.pollForChangesId);
         res();

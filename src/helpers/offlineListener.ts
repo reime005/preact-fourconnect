@@ -1,6 +1,6 @@
-import { Component } from "preact";
-
 export class OfflineListener {
+  onChange: (isOnline: boolean) => {};
+
   constructor(props) {
     this.onChange = props.onChange.bind(this);
     this.onOffline = this.onOffline.bind(this);

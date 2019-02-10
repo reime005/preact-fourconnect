@@ -1,6 +1,7 @@
 import asyncPlugin from "preact-cli-plugin-async";
 import envVars from "preact-cli-plugin-env-vars";
 import preactCliTypeScript from "preact-cli-plugin-typescript";
+import path from "path";
 
 const substituteTypingsForCssModulesLoader = config => {
   // Match instances of { loader: 'css-loader', options { modules: true }}
@@ -30,9 +31,12 @@ export default (config, env, helpers) => {
   config.node.process = true;
   config.node.Buffer = true;
 
-  // substituteTypingsForCssModulesLoader(config);
+  substituteTypingsForCssModulesLoader(config);
 
   preactCliTypeScript(config);
   envVars(config, env, helpers);
   asyncPlugin(config);
+
+  // be able to make relative imports like 'src/components/board/board', not '../../src/components/board/board'
+  config.resolve.modules.push(path.resolve("./"));
 };

@@ -22,7 +22,7 @@ class Cell extends Component {
     this.onMouseOver = this.onMouseOver.bind(this);
   }
 
-  render({ i, columnIsSelected, player, column }) {
+  render({ playersTurn, i, columnIsSelected, player, column }) {
     return (
       <div
         key={`cell-${i}`}
@@ -31,7 +31,7 @@ class Cell extends Component {
         // 	pointerEvents: disabled ? '' : 'mouse'
         // }}
         onMouseEnter={this.onMouseOver}
-        onClick={this.onCellClick}
+        onClick={playersTurn && this.onCellClick}
       >
         <div
           class={style.cell}
