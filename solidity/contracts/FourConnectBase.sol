@@ -56,6 +56,7 @@ contract FourConnectBase is Ownable {
     /// @param gameId The id of the game
     function internalGameInit(uint gameId) 
         internal {
+        joinedGames[msg.sender].push(gameId);
         games[gameId].bidPlayerOne = msg.value;
         games[gameId].playerOne = msg.sender;
         games[gameId].creationTime = now;
@@ -66,6 +67,7 @@ contract FourConnectBase is Ownable {
     /// @param gameId The id of the game
     function internalGameStart(uint gameId) 
         internal {
+        joinedGames[msg.sender].push(gameId);
         games[gameId].bidPlayerTwo = msg.value;
         games[gameId].running = true;
         games[gameId].lastTimePlayed = now;

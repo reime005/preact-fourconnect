@@ -108,6 +108,9 @@ export class FourConnectListener {
     }
 
     events[eventName]({ ...args }).on("data", evt => {
+      console.log(evt);
+      console.log(args.filter);
+      
       if (args.filter) {
         Object.keys(args.filter).forEach(key => {
           if (args.filter[key].includes(evt.returnValues[key])) {

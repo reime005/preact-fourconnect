@@ -17,6 +17,9 @@ import { claimTimeoutVictory } from "src/helpers/web3/claimTimeoutVictory";
 import { withdraw } from "src/helpers/web3/withdraw";
 import { giveUp } from "src/helpers/web3/giveUp";
 import { cancelCreatedGame } from "src/helpers/web3/cancelCreatedGame";
+import { Events } from "src/components/events/events";
+
+import * as style from "./style.css";
 
 interface Props {}
 
@@ -29,6 +32,7 @@ interface State {
   joinGameId: number;
   chosenIndex: number;
   stackId: number;
+  openGameId: number;
   accounts: any[];
   initialized: boolean;
   games: {
@@ -40,7 +44,7 @@ interface State {
   maxMoveTimeout: number;
   lastEvents: {
     [eventName: string]: {
-      [blockNumber: string]: string;
+      [blockNumber: string]: Date;
     };
   };
 }
@@ -55,6 +59,7 @@ class Web3Route extends Component<Props, State> {
     super(props);
 
     this.state = {
+      openGameId: -1,
       maxCreationTimeout: 0,
       maxMoveTimeout: 0,
       columnSelected: 0,
@@ -93,6 +98,22 @@ class Web3Route extends Component<Props, State> {
 
   public componentWillUnmount() {
     clearInterval(this.poll);
+  }
+
+  private async joinGame() {
+    try {
+      const openGameId = await this.fourConnectListener.callMethod(
+        "getOpenGameId"
+      );
+
+      console.warn(openGameId);
+
+      this.setState({ openGameId });
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.joinGameDialogRef.MDComponent.show();
   }
 
   public async initialize() {
@@ -204,7 +225,7 @@ class Web3Route extends Component<Props, State> {
   }
 
   private subscribeToEvent(eventName: string, useFilter: boolean) {
-    let filter = {};
+    let filter = null;
 
     if (useFilter) {
       filter = {
@@ -246,7 +267,9 @@ class Web3Route extends Component<Props, State> {
       web3,
       opponentsAddress,
       joinGameId,
-      createGameBidEth
+      createGameBidEth,
+      lastEvents,
+      openGameId
     }: State
   ) {
     const ownPlayer = accounts[0];
@@ -265,18 +288,15 @@ class Web3Route extends Component<Props, State> {
         accounts={accounts}
         drizzleStatus={{ initialized }}
       >
-        <div style={{ flex: 1, padding: 10, paddingTop: 65, margin: 10 }}>
-          <button onClick={() => this.getState()}>state</button>
-          {/* <button onClick={() => this.createGame()}>create new game</button> */}
+        <div style={{ marginTop: 65 }} class={style.container}>
+          {/* <button onClick={() => this.getState()}>state</button>
+          {/* <button onClick={() => this.createGame()}>create new game</button>
           <button onClick={() => {}}>claim timeout win</button>
           <button onClick={() => this.newRestrictedGame.MDComponent.show()}>
             new game
-          </button>
-          <button onClick={() => this.joinGameDialogRef.MDComponent.show()}>
-            join
-          </button>
+          </button> */}
 
-          {gameIds.length ? (
+          {/* {gameIds.length ? (
             <div>
               <Selector
                 chosenIndex={chosenIndex}
@@ -296,94 +316,101 @@ class Web3Route extends Component<Props, State> {
                 }}
               />
             </div>
-          ) : null}
+          ) : null} */}
 
-          <BoardControls
-            board={selectedGame}
-            ownPlayer={ownPlayer}
-            ethToWin={getEtherInGame(
-              selectedGame && selectedGame.bidPlayerOne || '0',
-              selectedGame && selectedGame.bidPlayerTwo || '0',
-              web3
-            )}
-            withdraw={() => withdraw(this.fourConnectListener, selectedGameId)}
-            claimTimeout={() =>
-              claimTimeoutVictory(this.fourConnectListener, selectedGameId)
-            }
-            giveUp={() => giveUp(this.fourConnectListener, selectedGameId)}
-            cancelCreatedGame={() =>
-              cancelCreatedGame(this.fourConnectListener, selectedGameId)
-            }
-            newGame={() =>
-              newGame(
-                this.fourConnectListener,
-                ownPlayer,
-                createGameBidEth,
-                opponentsAddress
-              )
-            }
-          />
+          <div style={style.gameContainer}>
+            <div>
+              <BoardControls
+                board={selectedGame}
+                ownPlayer={ownPlayer}
+                ethToWin={getEtherInGame(
+                  (selectedGame && selectedGame.bidPlayerOne) || "0",
+                  (selectedGame && selectedGame.bidPlayerTwo) || "0",
+                  web3
+                )}
+                joinGame={() => this.joinGame()}
+                withdraw={() =>
+                  withdraw(this.fourConnectListener, selectedGameId)
+                }
+                claimTimeout={() =>
+                  claimTimeoutVictory(this.fourConnectListener, selectedGameId)
+                }
+                giveUp={() => giveUp(this.fourConnectListener, selectedGameId)}
+                cancelCreatedGame={() =>
+                  cancelCreatedGame(this.fourConnectListener, selectedGameId)
+                }
+                newGame={() => this.newRestrictedGame.MDComponent.show()}
+              />
+            </div>
+            <div>
+              {selectedGame && (
+                <Board
+                  cells={selectedGame.cells}
+                  columnSelected={columnSelected}
+                  onClick={this.onCellClicked}
+                  playersTurn={playersTurn}
+                  onMouseOver={(columnSelected: number) =>
+                    this.setState({ columnSelected })
+                  }
+                />
+              )}
+            </div>
+          </div>
 
-          {selectedGame && (
-            <Board
-              cells={selectedGame.cells}
-              columnSelected={columnSelected}
-              onClick={this.onCellClicked}
-              playersTurn={playersTurn}
-              onMouseOver={(columnSelected: number) =>
-                this.setState({ columnSelected })
-              }
-            />
-          )}
-
-          <Dialog
-            setRef={joinGameDialogRef =>
-              (this.joinGameDialogRef = joinGameDialogRef)
-            }
-            acceptText={"Join Game"}
-            declineText={"Cancel"}
-            onAccept={() => joinGame(this.fourConnectListener, joinGameId)}
-            headerText={"Join a new Game"}
-            inputTexts={{
-              gameId: {
-                label: "Specific Game ID? (optional)",
-                onKeyUp: joinGameId =>
-                  this.setState({ joinGameId: Number(joinGameId) })
-              },
-              payment: {
-                label: "Your bid? (in ETH)",
-                onKeyUp: joinGameBidEth => this.setState({ joinGameBidEth })
-              }
-            }}
-          />
-
-          <Dialog
-            setRef={newRestrictedGame =>
-              (this.newRestrictedGame = newRestrictedGame)
-            }
-            acceptText={"New restricted game"}
-            declineText={"Cancel"}
-            onAccept={() =>
-              newGame(
-                this.fourConnectListener,
-                accounts[0],
-                createGameBidEth,
-                opponentsAddress
-              )
-            }
-            headerText={"Create a new Game"}
-            inputTexts={{
-              gameId: {
-                label: "Opponent's address? (optional)",
-                onKeyUp: opponentsAddress => this.setState({ opponentsAddress })
-              },
-              payment: {
-                label: "Your bid? (in ETH) (optional)",
-                onKeyUp: createGameBidEth => this.setState({ createGameBidEth })
-              }
-            }}
-          />
+          <Events events={lastEvents} />
         </div>
+
+        <Dialog
+          setRef={joinGameDialogRef =>
+            (this.joinGameDialogRef = joinGameDialogRef)
+          }
+          acceptText={"Join Game"}
+          declineText={"Cancel"}
+          onAccept={() =>
+            joinGame(this.fourConnectListener, joinGameId || openGameId)
+          }
+          headerText={"Join a new Game"}
+          inputTexts={{
+            gameId: {
+              label: `Specific Game ID? ${
+                openGameId > 0 ? "(" + openGameId + " is open)" : ""
+              }`,
+              onKeyUp: joinGameId =>
+                this.setState({ joinGameId: Number(joinGameId) })
+            },
+            payment: {
+              label: "Your bid? (in ETH)",
+              onKeyUp: joinGameBidEth => this.setState({ joinGameBidEth })
+            }
+          }}
+        />
+
+        <Dialog
+          setRef={newRestrictedGame =>
+            (this.newRestrictedGame = newRestrictedGame)
+          }
+          acceptText={opponentsAddress ? "New restricted game" : "New game"}
+          declineText={"Cancel"}
+          onAccept={() =>
+            newGame(
+              this.fourConnectListener,
+              accounts[0],
+              createGameBidEth,
+              opponentsAddress
+            )
+          }
+          headerText={"Create a new Game"}
+          inputTexts={{
+            gameId: {
+              label: "Opponent's address? (optional)",
+              onKeyUp: opponentsAddress => this.setState({ opponentsAddress })
+            },
+            payment: {
+              label: "Your bid? (in ETH) (optional)",
+              onKeyUp: createGameBidEth => this.setState({ createGameBidEth })
+            }
+          }}
+        />
       </LoadingContainer>
     );
   }

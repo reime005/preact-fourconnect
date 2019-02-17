@@ -49,6 +49,8 @@ export class Dialog extends Component<Props, State> {
                   Object.keys(inputTexts).map(key => (
                     <div key={key}>
                       <TextField
+                      style={{ width: '100%'}}
+                      outerStyle={{ width: '100%'}}
                         label={inputTexts[key].label}
                         onKeyUp={(e: any) => {
                           inputTexts[key].onKeyUp(new String(e.target.value).trim())

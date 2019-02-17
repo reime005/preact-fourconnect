@@ -38,7 +38,6 @@ contract FourConnect is FourConnectCalls {
         payable
         returns(uint) {
         uint gameId = nextUID();
-        joinedGames[msg.sender].push(gameId);
         internalGameInit(gameId);
         return gameId;
     }
@@ -83,8 +82,6 @@ contract FourConnect is FourConnectCalls {
         } else {
             games[gameId].currentPlayer = Player.TWO;
         }
-
-        joinedGames[msg.sender].push(gameId);
 
         internalGameStart(gameId);
     }

@@ -150,8 +150,8 @@
       "type": "event"
     }
   ],
-  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a36103bf806100cf6000396000f3fe608060405234801561001057600080fd5b5060043610610069576000357c010000000000000000000000000000000000000000000000000000000090048063715018a61461006e5780637f7dcdbf146100785780638da5cb5b1461009a578063f2fde38b146100e4575b600080fd5b610076610128565b005b6100806101fa565b604051808215151515815260200191505060405180910390f35b6100a2610251565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610126600480360360208110156100fa57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061027a565b005b6101306101fa565b151561013b57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6102826101fa565b151561028d57600080fd5b61029681610299565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102d557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea165627a7a723058207138c67cc3f1550cce5426eac3aea412627f6fd9f8e808d6f1d6da65cf086e650029",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b5060043610610069576000357c010000000000000000000000000000000000000000000000000000000090048063715018a61461006e5780637f7dcdbf146100785780638da5cb5b1461009a578063f2fde38b146100e4575b600080fd5b610076610128565b005b6100806101fa565b604051808215151515815260200191505060405180910390f35b6100a2610251565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610126600480360360208110156100fa57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061027a565b005b6101306101fa565b151561013b57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6102826101fa565b151561028d57600080fd5b61029681610299565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102d557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea165627a7a723058207138c67cc3f1550cce5426eac3aea412627f6fd9f8e808d6f1d6da65cf086e650029",
+  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a36103bf806100cf6000396000f3fe608060405234801561001057600080fd5b5060043610610069576000357c010000000000000000000000000000000000000000000000000000000090048063715018a61461006e5780637f7dcdbf146100785780638da5cb5b1461009a578063f2fde38b146100e4575b600080fd5b610076610128565b005b6100806101fa565b604051808215151515815260200191505060405180910390f35b6100a2610251565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610126600480360360208110156100fa57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061027a565b005b6101306101fa565b151561013b57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6102826101fa565b151561028d57600080fd5b61029681610299565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102d557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea165627a7a723058205c1e9ad4f393d860b11e2ec0eaf3bc7afafa4568a3997da7b6c75094caec48ef0029",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b5060043610610069576000357c010000000000000000000000000000000000000000000000000000000090048063715018a61461006e5780637f7dcdbf146100785780638da5cb5b1461009a578063f2fde38b146100e4575b600080fd5b610076610128565b005b6100806101fa565b604051808215151515815260200191505060405180910390f35b6100a2610251565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610126600480360360208110156100fa57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061027a565b005b6101306101fa565b151561013b57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6102826101fa565b151561028d57600080fd5b61029681610299565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102d557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea165627a7a723058205c1e9ad4f393d860b11e2ec0eaf3bc7afafa4568a3997da7b6c75094caec48ef0029",
   "sourceMap": "58:1921:3:-;;;524:10:5;515:6;;:19;;;;;;;;;;;;;;;;;;582:6;;;;;;;;;;;549:40;;578:1;549:40;;;;;;;;;;;;58:1921:3;;;;;;",
   "deployedSourceMap": "58:1921:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;58:1921:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1371:145:5;;;:::i;:::-;;995:98;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;659:77;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1687:115;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1687:115:5;;;;;;;;;;;;;;;;;;;:::i;:::-;;1371:145;871:17;:15;:17::i;:::-;863:26;;;;;;;;1477:1;1440:40;;1461:6;;;;;;;;;;;1440:40;;;;;;;;;;;;1507:1;1490:6;;:19;;;;;;;;;;;;;;;;;;1371:145::o;995:98::-;1043:4;1080:6;;;;;;;;;;;1066:20;;:10;:20;;;1059:27;;995:98;:::o;659:77::-;697:7;723:6;;;;;;;;;;;716:13;;659:77;:::o;1687:115::-;871:17;:15;:17::i;:::-;863:26;;;;;;;;1767:28;1786:8;1767:18;:28::i;:::-;1687:115;:::o;1946:183::-;2039:1;2019:22;;:8;:22;;;;2011:31;;;;;;;;2086:8;2057:38;;2078:6;;;;;;;;;;;2057:38;;;;;;;;;;;;2114:8;2105:6;;:17;;;;;;;;;;;;;;;;;;1946:183;:::o",
   "source": "pragma solidity ^0.5.2;\n\nimport \"./FourConnectBase.sol\";\n\ncontract FourConnectModifiers is FourConnectBase {\n\n    modifier onlyWhenGameExists(uint gameId) {\n        require(games[gameId].playerOne != address(0));\n        _;\n    }\n\n    modifier onlyWhenGameNotExists(uint gameId) {\n        require(games[gameId].playerOne == address(0));\n        _;\n    }\n\n    modifier onlyWhenRunning(uint gameId) {\n        require(games[gameId].running);\n        _;\n    }\n\n    modifier onlyWhenNotRunning(uint gameId) {\n        require(!games[gameId].running);\n        _;\n    }\n\n    modifier onlyPlayers(uint gameId) {\n        require(\n            msg.sender == games[gameId].playerOne ||\n            msg.sender == games[gameId].playerTwo);\n        _;\n    }\n\n    modifier onlyNonOwner(uint gameId) {\n        require(\n            msg.sender == games[gameId].playerTwo);\n        _;\n    }\n\n    modifier onlyOwner(uint gameId) {\n        require(\n            msg.sender == games[gameId].playerOne);\n        _;\n    }\n\n    /// @notice Only the player who is supposed to turn\n    /// @param gameId The id of the game\n    modifier onlyActivePlayer(uint gameId) {\n        require(msg.sender == getPlayerAddress(gameId, true));\n        _;\n    }\n\n    /// @notice Only the player who is not supposed to turn\n    /// @param gameId The id of the game\n    modifier onlyInactivePlayer(uint gameId) {\n        require(msg.sender == getPlayerAddress(gameId, false));\n        _;\n    }\n\n    modifier onlyGameCreator(uint gameId) {\n        require(msg.sender == games[gameId].playerOne);\n        _;\n    }\n\n    modifier onlyAfterTimeout(uint gameId) {\n        require(now > games[gameId].lastTimePlayed + MAX_MOVE_TIMEOUT);\n        _;\n    }\n\n    modifier onlyInTimeout(uint gameId) {\n        require(now < games[gameId].lastTimePlayed + MAX_MOVE_TIMEOUT);\n        _;\n    }\n\n    modifier onlyAfterCreationTimeout(uint gameId) {\n        require(now > games[gameId].creationTime + MAX_CREATION_TIMEOUT);\n        _;\n    }\n}",
@@ -256,10 +256,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "173:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -284,7 +284,7 @@
                             "nodeType": "IndexAccess",
                             "src": "173:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -295,7 +295,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "173:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -484,10 +484,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "297:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -512,7 +512,7 @@
                             "nodeType": "IndexAccess",
                             "src": "297:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -523,7 +523,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "297:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -701,10 +701,10 @@
                             "name": "games",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 719,
+                            "referencedDeclaration": 703,
                             "src": "415:5:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                               "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                             }
                           },
@@ -729,7 +729,7 @@
                           "nodeType": "IndexAccess",
                           "src": "415:13:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Game_$705_storage",
+                            "typeIdentifier": "t_struct$_Game_$689_storage",
                             "typeString": "struct FourConnectBase.Game storage ref"
                           }
                         },
@@ -740,7 +740,7 @@
                         "lValueRequested": false,
                         "memberName": "running",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 700,
+                        "referencedDeclaration": 684,
                         "src": "415:21:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
@@ -865,10 +865,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "521:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -893,7 +893,7 @@
                             "nodeType": "IndexAccess",
                             "src": "521:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -904,7 +904,7 @@
                           "lValueRequested": false,
                           "memberName": "running",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 700,
+                          "referencedDeclaration": 684,
                           "src": "521:21:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
@@ -1076,10 +1076,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "646:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -1104,7 +1104,7 @@
                               "nodeType": "IndexAccess",
                               "src": "646:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -1115,7 +1115,7 @@
                             "lValueRequested": false,
                             "memberName": "playerOne",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 692,
+                            "referencedDeclaration": 676,
                             "src": "646:23:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -1182,10 +1182,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "699:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -1210,7 +1210,7 @@
                               "nodeType": "IndexAccess",
                               "src": "699:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -1221,7 +1221,7 @@
                             "lValueRequested": false,
                             "memberName": "playerTwo",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 694,
+                            "referencedDeclaration": 678,
                             "src": "699:23:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -1389,10 +1389,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "827:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -1417,7 +1417,7 @@
                             "nodeType": "IndexAccess",
                             "src": "827:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -1428,7 +1428,7 @@
                           "lValueRequested": false,
                           "memberName": "playerTwo",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 694,
+                          "referencedDeclaration": 678,
                           "src": "827:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -1590,10 +1590,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "952:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -1618,7 +1618,7 @@
                             "nodeType": "IndexAccess",
                             "src": "952:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -1629,7 +1629,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "952:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -2223,10 +2223,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "1523:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -2251,7 +2251,7 @@
                             "nodeType": "IndexAccess",
                             "src": "1523:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -2262,7 +2262,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "1523:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -2419,10 +2419,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1634:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -2447,7 +2447,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1634:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -2458,7 +2458,7 @@
                             "lValueRequested": false,
                             "memberName": "lastTimePlayed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 686,
+                            "referencedDeclaration": 670,
                             "src": "1634:28:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2473,7 +2473,7 @@
                             "name": "MAX_MOVE_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 712,
+                            "referencedDeclaration": 696,
                             "src": "1665:16:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2636,10 +2636,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1766:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -2664,7 +2664,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1766:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -2675,7 +2675,7 @@
                             "lValueRequested": false,
                             "memberName": "lastTimePlayed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 686,
+                            "referencedDeclaration": 670,
                             "src": "1766:28:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2690,7 +2690,7 @@
                             "name": "MAX_MOVE_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 712,
+                            "referencedDeclaration": 696,
                             "src": "1797:16:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2853,10 +2853,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1909:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -2881,7 +2881,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1909:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -2892,7 +2892,7 @@
                             "lValueRequested": false,
                             "memberName": "creationTime",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 688,
+                            "referencedDeclaration": 672,
                             "src": "1909:26:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2907,7 +2907,7 @@
                             "name": "MAX_CREATION_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 715,
+                            "referencedDeclaration": 699,
                             "src": "1938:20:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -3120,10 +3120,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "173:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -3148,7 +3148,7 @@
                             "nodeType": "IndexAccess",
                             "src": "173:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -3159,7 +3159,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "173:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -3348,10 +3348,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "297:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -3376,7 +3376,7 @@
                             "nodeType": "IndexAccess",
                             "src": "297:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -3387,7 +3387,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "297:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -3565,10 +3565,10 @@
                             "name": "games",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 719,
+                            "referencedDeclaration": 703,
                             "src": "415:5:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                               "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                             }
                           },
@@ -3593,7 +3593,7 @@
                           "nodeType": "IndexAccess",
                           "src": "415:13:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Game_$705_storage",
+                            "typeIdentifier": "t_struct$_Game_$689_storage",
                             "typeString": "struct FourConnectBase.Game storage ref"
                           }
                         },
@@ -3604,7 +3604,7 @@
                         "lValueRequested": false,
                         "memberName": "running",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 700,
+                        "referencedDeclaration": 684,
                         "src": "415:21:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
@@ -3729,10 +3729,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "521:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -3757,7 +3757,7 @@
                             "nodeType": "IndexAccess",
                             "src": "521:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -3768,7 +3768,7 @@
                           "lValueRequested": false,
                           "memberName": "running",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 700,
+                          "referencedDeclaration": 684,
                           "src": "521:21:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
@@ -3940,10 +3940,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "646:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -3968,7 +3968,7 @@
                               "nodeType": "IndexAccess",
                               "src": "646:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -3979,7 +3979,7 @@
                             "lValueRequested": false,
                             "memberName": "playerOne",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 692,
+                            "referencedDeclaration": 676,
                             "src": "646:23:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -4046,10 +4046,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "699:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -4074,7 +4074,7 @@
                               "nodeType": "IndexAccess",
                               "src": "699:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -4085,7 +4085,7 @@
                             "lValueRequested": false,
                             "memberName": "playerTwo",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 694,
+                            "referencedDeclaration": 678,
                             "src": "699:23:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -4253,10 +4253,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "827:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -4281,7 +4281,7 @@
                             "nodeType": "IndexAccess",
                             "src": "827:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -4292,7 +4292,7 @@
                           "lValueRequested": false,
                           "memberName": "playerTwo",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 694,
+                          "referencedDeclaration": 678,
                           "src": "827:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -4454,10 +4454,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "952:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -4482,7 +4482,7 @@
                             "nodeType": "IndexAccess",
                             "src": "952:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -4493,7 +4493,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "952:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -5087,10 +5087,10 @@
                               "name": "games",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 703,
                               "src": "1523:5:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                 "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                               }
                             },
@@ -5115,7 +5115,7 @@
                             "nodeType": "IndexAccess",
                             "src": "1523:13:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Game_$705_storage",
+                              "typeIdentifier": "t_struct$_Game_$689_storage",
                               "typeString": "struct FourConnectBase.Game storage ref"
                             }
                           },
@@ -5126,7 +5126,7 @@
                           "lValueRequested": false,
                           "memberName": "playerOne",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 692,
+                          "referencedDeclaration": 676,
                           "src": "1523:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -5283,10 +5283,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1634:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -5311,7 +5311,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1634:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -5322,7 +5322,7 @@
                             "lValueRequested": false,
                             "memberName": "lastTimePlayed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 686,
+                            "referencedDeclaration": 670,
                             "src": "1634:28:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5337,7 +5337,7 @@
                             "name": "MAX_MOVE_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 712,
+                            "referencedDeclaration": 696,
                             "src": "1665:16:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5500,10 +5500,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1766:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -5528,7 +5528,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1766:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -5539,7 +5539,7 @@
                             "lValueRequested": false,
                             "memberName": "lastTimePlayed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 686,
+                            "referencedDeclaration": 670,
                             "src": "1766:28:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5554,7 +5554,7 @@
                             "name": "MAX_MOVE_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 712,
+                            "referencedDeclaration": 696,
                             "src": "1797:16:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5717,10 +5717,10 @@
                                 "name": "games",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 719,
+                                "referencedDeclaration": 703,
                                 "src": "1909:5:3",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$705_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Game_$689_storage_$",
                                   "typeString": "mapping(uint256 => struct FourConnectBase.Game storage ref)"
                                 }
                               },
@@ -5745,7 +5745,7 @@
                               "nodeType": "IndexAccess",
                               "src": "1909:13:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Game_$705_storage",
+                                "typeIdentifier": "t_struct$_Game_$689_storage",
                                 "typeString": "struct FourConnectBase.Game storage ref"
                               }
                             },
@@ -5756,7 +5756,7 @@
                             "lValueRequested": false,
                             "memberName": "creationTime",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 688,
+                            "referencedDeclaration": 672,
                             "src": "1909:26:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5771,7 +5771,7 @@
                             "name": "MAX_CREATION_TIMEOUT",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 715,
+                            "referencedDeclaration": 699,
                             "src": "1938:20:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -5890,7 +5890,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-10T00:18:30.128Z",
+  "updatedAt": "2019-02-16T15:28:50.777Z",
   "devdoc": {
     "methods": {
       "isContractOwner()": {

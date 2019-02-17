@@ -14,6 +14,7 @@ interface Props {
   claimTimeout: () => void;
   withdraw: () => void;
   cancelCreatedGame: () => void;
+  joinGame: () => void;
 }
 
 export const BoardControls = ({
@@ -25,11 +26,14 @@ export const BoardControls = ({
   claimTimeout,
   withdraw,
   cancelCreatedGame,
+  joinGame,
 }: Props) => {
   if (!board) {
     return (
       <div class={style.container}>
-        <p>loading</p>
+        <div>
+          <Button raised onClick={joinGame}>Join a Game</Button>
+        </div>
       </div>
     );
   }
@@ -42,14 +46,17 @@ export const BoardControls = ({
   const isGameOver = !isRunning && !addressIsZero(board.winner);
   const winnerIsYou = isGameOver && ownPlayer === board.winner;
 
-  alert(ownPlayer + ' == ' + board.winner)
+  // alert(ownPlayer + ' == ' + board.winner)
 
   return (
     <div class={style.container}>
     {/* <p>{JSON.stringify(board)}</p> */}
       <div>
-        <p>You can start a new game.</p>
         <Button raised onClick={newGame}>New Game</Button>
+      </div>
+
+      <div>
+        <Button raised onClick={joinGame}>Join a Game</Button>
       </div>
 
       {!isRunning && !isGameOver && (
@@ -60,7 +67,6 @@ export const BoardControls = ({
 
       {!isRunning && (
         <div>
-          <p>Maybe you can cancel your game.</p>
           <Button raised onClick={cancelCreatedGame}>Cancel Created Game</Button>
         </div>
       )}

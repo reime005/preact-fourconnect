@@ -3,3 +3,15 @@
 	min-height: 100%;
 	width: 100%;
 }
+
+.container {
+	display: grid;
+	grid-template-columns: 75% auto;
+	grid-column-gap: 10px;
+}
+
+.gameContainer {
+	display: grid;
+	grid-template-rows: minmax(20%, auto) minmax(60%, auto);
+	grid-row-gap: 5%;
+}

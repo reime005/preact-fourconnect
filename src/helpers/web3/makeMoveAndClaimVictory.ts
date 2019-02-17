@@ -4,7 +4,7 @@ export const makeMoveAndClaimVictory = async (
   fourConnectListener: FourConnectListener,
   gameId: number,
   moveToMake: number,
-  claim: number[4]
+  claim: number[]
 ) => {
   try {
     return await fourConnectListener.cacheSend("makeMoveAndClaimVictory", gameId, moveToMake, claim);
