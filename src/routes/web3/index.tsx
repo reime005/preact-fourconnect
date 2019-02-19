@@ -44,7 +44,10 @@ interface State {
   maxMoveTimeout: number;
   lastEvents: {
     [eventName: string]: {
-      [blockNumber: string]: Date;
+      [blockNumber: string]: {
+        timestamp: Date,
+        gameId: number
+      };
     };
   };
 }
@@ -68,7 +71,7 @@ class Web3Route extends Component<Props, State> {
       createGameBidEth: "",
       joinGameBidEth: "",
       joinGameId: -1,
-      chosenIndex: -1,
+      chosenIndex: 1,
       stackId: 0x0,
       accounts: [],
       games: {},
@@ -90,6 +93,7 @@ class Web3Route extends Component<Props, State> {
     this.initializeEventsForGames = this.initializeEventsForGames.bind(this);
     this.onCellClicked = this.onCellClicked.bind(this);
     this.refreshGame = this.refreshGame.bind(this);
+    this.renderGameIdSelector = this.renderGameIdSelector.bind(this);
   }
 
   public async componentDidMount() {
@@ -105,8 +109,6 @@ class Web3Route extends Component<Props, State> {
       const openGameId = await this.fourConnectListener.callMethod(
         "getOpenGameId"
       );
-
-      console.warn(openGameId);
 
       this.setState({ openGameId });
     } catch (e) {
@@ -135,12 +137,21 @@ class Web3Route extends Component<Props, State> {
 
     const accounts = (await web3.eth.getAccounts()) || [];
 
+    let lastEvents = {};
+    
+    try {
+      lastEvents = JSON.parse(localStorage.getItem('events'));
+    } catch (error) {
+      console.warn(error);
+    }
+
     this.setState({
       web3,
       accounts,
       initialized: true,
       maxCreationTimeout,
-      maxMoveTimeout
+      maxMoveTimeout,
+      lastEvents
     });
 
     this.getState();
@@ -179,8 +190,7 @@ class Web3Route extends Component<Props, State> {
       });
 
       this.setState({
-        chosenIndex: 0,
-        selectedGameId: gameIds[0]
+        selectedGameId: gameIds[this.state.chosenIndex - 1]
       });
 
       this.initializeEventsForGames();
@@ -235,23 +245,60 @@ class Web3Route extends Component<Props, State> {
 
     this.fourConnectListener.subscribeEvent(
       eventName,
-      (error: any, evt: any) => {
+      async (error: any, evt: any) => {
         if (!error) {
-          this.setState({
-            lastEvents: {
-              ...this.state.lastEvents,
-              [eventName]: {
-                ...this.state.lastEvents[eventName],
-                [evt.blockNumber]: Date.now()
+          const gameId = evt.returnValues && evt.returnValues.gameId;
+          const { chosenIndex } = this.state;
+
+          const lastEvents = {
+            ...this.state.lastEvents,
+            [eventName]: {
+              ...this.state.lastEvents && this.state.lastEvents[eventName],
+              [evt.blockNumber]: {
+                timestamp: Date.now(),
+                gameId: evt.returnValues && evt.returnValues.gameId
               }
             }
+          }
+
+          localStorage.setItem('events', JSON.stringify(lastEvents));
+
+          this.setState({
+            lastEvents
           });
+
+          if (this.state.gameIds.indexOf(Number(gameId)) != -1 ) {
+            await this.getState();
+            this.setState({ chosenIndex });
+          } 
         } else {
           console.error(error);
         }
       },
       { filter }
     );
+  }
+
+  private renderGameIdSelector() {
+    const { chosenIndex, gameIds } = this.state;
+
+    return <Selector
+      chosenIndex={chosenIndex}
+      hintText={"GameIds"}
+      options={gameIds}
+      onChange={(
+        e: Event & {
+          target: EventTarget & { selectedIndex: number };
+        }
+      ) => {
+        this.setState({
+          chosenIndex: e.target.selectedIndex,
+          selectedGameId: this.state.gameIds[
+            e.target.selectedIndex - 1
+          ]
+        });
+      }}
+    />
   }
 
   public render(
@@ -288,7 +335,7 @@ class Web3Route extends Component<Props, State> {
         accounts={accounts}
         drizzleStatus={{ initialized }}
       >
-        <div style={{ marginTop: 65 }} class={style.container}>
+        <div style={{ margin: 15 }} class={style.container}>
           {/* <button onClick={() => this.getState()}>state</button>
           {/* <button onClick={() => this.createGame()}>create new game</button>
           <button onClick={() => {}}>claim timeout win</button>
@@ -318,7 +365,7 @@ class Web3Route extends Component<Props, State> {
             </div>
           ) : null} */}
 
-          <div style={style.gameContainer}>
+          <div class={style.gameContainer}>
             <div>
               <BoardControls
                 board={selectedGame}
@@ -340,6 +387,7 @@ class Web3Route extends Component<Props, State> {
                   cancelCreatedGame(this.fourConnectListener, selectedGameId)
                 }
                 newGame={() => this.newRestrictedGame.MDComponent.show()}
+                gameIdSelector={this.renderGameIdSelector()}
               />
             </div>
             <div>
@@ -358,9 +406,8 @@ class Web3Route extends Component<Props, State> {
           </div>
 
           <Events events={lastEvents} />
-        </div>
 
-        <Dialog
+          <Dialog
           setRef={joinGameDialogRef =>
             (this.joinGameDialogRef = joinGameDialogRef)
           }
@@ -411,6 +458,9 @@ class Web3Route extends Component<Props, State> {
             }
           }}
         />
+        </div>
+
+        
       </LoadingContainer>
     );
   }

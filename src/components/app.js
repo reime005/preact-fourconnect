@@ -63,18 +63,20 @@ export default class App extends Component {
   render({}, { isOnline, isRunning, name }) {
     return (
       <div id="app">
-        <Header isOnline={isOnline} />
-        <Router onChange={this.handleRoute}>
-          <Home
-            isRunning={isRunning}
-            onNewGame={this.onNewGame}
-            changeName={this.changeName}
-            name={name}
-            path="/"
-          />
-          <Game isOnline={isOnline} path="/game" />
-          <Web3 isOnline={isOnline} path="/web3" />
-        </Router>
+        <div id="container">
+          <Header isOnline={isOnline} />
+          <Router onChange={this.handleRoute}>
+            <Home
+              isRunning={isRunning}
+              onNewGame={this.onNewGame}
+              changeName={this.changeName}
+              name={name}
+              path="/"
+            />
+            <Game isOnline={isOnline} path="/game" />
+            <Web3 isOnline={isOnline} path="/web3" />
+          </Router>
+        </div>
       </div>
     );
   }

@@ -31,7 +31,7 @@ class Cell extends Component {
         // 	pointerEvents: disabled ? '' : 'mouse'
         // }}
         onMouseEnter={this.onMouseOver}
-        onClick={playersTurn && this.onCellClick}
+        onClick={this.onCellClick}
       >
         <div
           class={style.cell}

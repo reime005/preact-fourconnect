@@ -1,5 +1,5 @@
 .container {
-	flex-direction: row;
+	flex-direction: column;
 	padding: 25;
 }
 
@@ -9,13 +9,13 @@
 .item {
 	display: grid;
 	color: white;
-  row-gap: 200px;
-  column-gap: 20px;
-	grid-template-columns: repeat(3, auto);
+	grid-template-columns: repeat(3, minmax(3vw, 7vw));
 	justify-content: center;
 	text-align: center;
 }
 
 .item > span {
 	flex: 1 1 auto;
+	font-size: 0.8rem;
+	overflow: scroll;
 }

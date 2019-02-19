@@ -1,6 +1,20 @@
 .container {
-	display: grid;
-	flex-direction: row;
-	margin: 50;
-  grid-template-columns: repeat(5, auto);
+	display: flex;
+	flex-direction: column;
+	margin: 10;
+	padding: 10;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.container div {
+	width: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, auto));
+  }
 }

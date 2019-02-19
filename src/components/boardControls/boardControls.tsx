@@ -1,4 +1,4 @@
-import { h } from "preact";
+import { h, Component } from "preact";
 import * as style from "./style.css";
 
 import { addressIsZero } from "src/helpers/web3/addressIsZero";
@@ -9,6 +9,7 @@ interface Props {
   board: FourConnectGame | null;
   ownPlayer?: string;
   ethToWin?: string;
+  gameIdSelector: any;
   newGame: () => void;
   giveUp: () => void;
   claimTimeout: () => void;
@@ -27,12 +28,16 @@ export const BoardControls = ({
   withdraw,
   cancelCreatedGame,
   joinGame,
+  gameIdSelector,
 }: Props) => {
   if (!board) {
     return (
       <div class={style.container}>
         <div>
           <Button raised onClick={joinGame}>Join a Game</Button>
+        </div>
+        <div>
+          <Button raised onClick={newGame}>New Game</Button>
         </div>
       </div>
     );
@@ -51,6 +56,10 @@ export const BoardControls = ({
   return (
     <div class={style.container}>
     {/* <p>{JSON.stringify(board)}</p> */}
+      <div>
+        {gameIdSelector}
+      </div>
+
       <div>
         <Button raised onClick={newGame}>New Game</Button>
       </div>
