@@ -370,6 +370,7 @@ class Web3Route extends Component<Props, State> {
               <BoardControls
                 board={selectedGame}
                 ownPlayer={ownPlayer}
+                refreshState={() => this.refreshGame(this.state.selectedGameId)}
                 ethToWin={getEtherInGame(
                   (selectedGame && selectedGame.bidPlayerOne) || "0",
                   (selectedGame && selectedGame.bidPlayerTwo) || "0",

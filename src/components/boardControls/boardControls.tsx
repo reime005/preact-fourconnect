@@ -16,6 +16,7 @@ interface Props {
   withdraw: () => void;
   cancelCreatedGame: () => void;
   joinGame: () => void;
+  refreshState: () => void;
 }
 
 export const BoardControls = ({
@@ -29,12 +30,14 @@ export const BoardControls = ({
   cancelCreatedGame,
   joinGame,
   gameIdSelector,
+  refreshState,
 }: Props) => {
   if (!board) {
     return (
       <div class={style.container}>
         <div>
           <Button raised onClick={joinGame}>Join a Game</Button>
+          <Button raised onClick={refreshState}>Refresh</Button>
         </div>
         <div>
           <Button raised onClick={newGame}>New Game</Button>
@@ -66,6 +69,7 @@ export const BoardControls = ({
 
       <div>
         <Button raised onClick={joinGame}>Join a Game</Button>
+        <Button raised onClick={refreshState}>Refresh</Button>
       </div>
 
       {!isRunning && !isGameOver && (

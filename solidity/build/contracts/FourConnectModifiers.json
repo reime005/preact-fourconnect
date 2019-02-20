@@ -5890,7 +5890,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-19T20:58:19.421Z",
+  "updatedAt": "2019-02-20T21:53:40.707Z",
   "devdoc": {
     "methods": {
       "isContractOwner()": {

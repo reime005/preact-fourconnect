@@ -20,7 +20,7 @@ export const makeMove = (board, player = players.NONE, position = -1) => {
 
   const nextRowCell = board.cells[position + boardSize.columns];
 
-  if (nextRowCell && nextRowCell === players.NONE) {
+  if (nextRowCell === players.NONE) {
     throw "Next row is not empty!";
   }
 
@@ -120,36 +120,43 @@ export const gameEnd = (lastPosition = -1, board) => {
     return lastPosition;
   };
 
-  if (_checkHasWon(cells, 1, getMostLeftPosition(lastPosition), lastPlayer)) {
-    isGameEnd = true;
-  } else if (
-    _checkHasWon(
-      cells,
-      -boardSize.columns,
-      getMostBottomPositon(lastPosition),
-      lastPlayer
-    )
-  ) {
-    isGameEnd = true;
-  } else if (
-    _checkHasWonDiagonal(
-      1,
-      -boardSize.columns,
-      cells,
-      getMostBottomLeftPositon(lastPosition),
-      lastPlayer
-    )
-  ) {
-    isGameEnd = true;
-  } else if (
-    _checkHasWonDiagonal(
-      -1,
-      -boardSize.columns,
-      cells,
-      getMostBottomRightPositon(lastPosition),
-      lastPlayer
-    )
-  ) {
+  let winningCells = _checkHasWon(
+    cells,
+    1,
+    getMostLeftPosition(lastPosition),
+    lastPlayer
+  );
+
+  winningCells = !winningCells
+    ? _checkHasWon(
+        cells,
+        -boardSize.columns,
+        getMostBottomPositon(lastPosition),
+        lastPlayer
+      )
+    : winningCells;
+
+  winningCells = !winningCells
+    ? _checkHasWonDiagonal(
+        1,
+        -boardSize.columns,
+        cells,
+        getMostBottomLeftPositon(lastPosition),
+        lastPlayer
+      )
+    : winningCells;
+
+  winningCells = !winningCells
+    ? _checkHasWonDiagonal(
+        -1,
+        -boardSize.columns,
+        cells,
+        getMostBottomRightPositon(lastPosition),
+        lastPlayer
+      )
+    : winningCells;
+
+  if (winningCells) {
     isGameEnd = true;
   }
 
@@ -157,7 +164,7 @@ export const gameEnd = (lastPosition = -1, board) => {
     currentPlayer = nextPlayer(lastPlayer);
   }
 
-  return { ...board, isGameEnd, currentPlayer };
+  return { ...board, isGameEnd, currentPlayer, winningCells };
 };
 
 const _checkHasWonDiagonal = (
@@ -192,7 +199,7 @@ const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
     if (cells[i] !== player && cellsToCheck.length > 0) {
       cellsToCheck.pop();
     } else if (cells[i] === player) {
-      cellsToCheck.push(cells[i]);
+      cellsToCheck.push({ player: cells[i], i });
     }
 
     // if we are on the edge of a row
@@ -208,8 +215,8 @@ const _checkHasWon = (cells = {}, increment = 0, lastPosition = -1, player) => {
     return false;
   }
 
-  return _checkIndicesValid(player, cellsToCheck);
+  return _checkIndicesValid(player, cellsToCheck) && cellsToCheck;
 };
 
 const _checkIndicesValid = (player, indices = []) =>
-  indices.reduce((sum, i) => sum + (i === player ? 1 : 0), 0) === 4;
+  indices.reduce((sum, i) => sum + (i.player === player ? 1 : 0), 0) === 4;

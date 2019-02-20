@@ -98,6 +98,20 @@ describe("makeMove", () => {
     expect(gameEnd(27, board).isGameEnd).toEqual(true);
     expect(gameEnd(26, board).isGameEnd).toEqual(true);
     expect(gameEnd(25, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(24, board).winningCells.map(cell => cell.i)).toEqual([
+      24,
+      25,
+      26,
+      27
+    ]);
+
+    expect(gameEnd(27, board).winningCells.map(cell => cell.i)).toEqual([
+      24,
+      25,
+      26,
+      27
+    ]);
   });
 
   test("should run a diagonal game 1", () => {
@@ -124,6 +138,13 @@ describe("makeMove", () => {
     expect(gameEnd(9, board).isGameEnd).toEqual(true);
     expect(gameEnd(15, board).isGameEnd).toEqual(true);
     expect(gameEnd(21, board).isGameEnd).toEqual(true);
+
+    expect(gameEnd(15, board).winningCells.map(cell => cell.i)).toStrictEqual([
+      21,
+      15,
+      9,
+      3
+    ]);
   });
 
   test("should run a diagonal game 2,3", () => {
@@ -152,9 +173,18 @@ describe("makeMove", () => {
     expect(gameEnd(18, board).isGameEnd).toEqual(true);
     expect(gameEnd(24, board).isGameEnd).toEqual(true);
 
+    expect(gameEnd(24, board).winningCells.map(cell => cell.i)).toStrictEqual([
+      24,
+      18,
+      12,
+      6
+    ]);
+
     expect(gameEnd(40, board).isGameEnd).toEqual(false);
     expect(gameEnd(26, board).isGameEnd).toEqual(false);
     expect(gameEnd(33, board).isGameEnd).toEqual(false);
+
+    expect(gameEnd(40, board).winningCells).toBeFalsy();
   });
 
   test("should run a diagonal game 3,4", () => {
