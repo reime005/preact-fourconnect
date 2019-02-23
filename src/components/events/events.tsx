@@ -1,26 +1,26 @@
 import { h } from "preact";
 import * as style from "./style.css";
 
-import { Button } from "preact-material-components/ts/Button";
 import "preact-material-components/Button/style.css";
+import { Button } from "preact-material-components/ts/Button";
 
 interface Props {
   events: {
     [eventName: string]: {
       [blockNumber: string]: {
         timestamp: Date,
-        gameId: number
+        gameId: number,
       };
     };
   };
 }
 
 const clearLocalStorage = () => {
-  localStorage && localStorage.setItem('events', '{}');
-}
+  localStorage && localStorage.setItem("events", "{}");
+};
 
 export const Events = ({
-  events = {}
+  events = {},
 }: Props) => {
 
   if (!events) {
@@ -35,11 +35,11 @@ export const Events = ({
   <div style={{
     padding: 15,
     margin: 5,
-    backgroundColor: 'darkgrey',
+    backgroundColor: "darkgrey",
     borderRadius: 5,
     right: 5}}>
     <div>
-      <Button style={{justifyContent: 'right', marginBottom: 10}} raised onClick={clearLocalStorage}>Clear Local Events</Button>
+      <Button style={{justifyContent: "right", marginBottom: 10}} raised onClick={clearLocalStorage}>Clear Local Events</Button>
     </div>
 
     <div class={style.container}>
@@ -50,9 +50,9 @@ export const Events = ({
         <span><strong>Timestamp</strong></span>
       </div>
 
-      {eventNames.map(eventName => {
+      {eventNames.map((eventName) => {
         const blockNumbers = Object.keys(events[eventName]);
-        
+
         return <div>
           {blockNumbers.map((blockNumber: string) => <div class={style.item}>
             <span>{eventName}</span>
@@ -60,7 +60,7 @@ export const Events = ({
             <span>{events[eventName][blockNumber].gameId}</span>
             <span>{new Date(events[eventName][blockNumber].timestamp).toLocaleString()}</span>
           </div>)}
-        </div>
+        </div>;
       })
     }
     </div>

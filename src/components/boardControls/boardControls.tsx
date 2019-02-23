@@ -1,9 +1,9 @@
-import { h, Component } from "preact";
+import { Component, h } from "preact";
 import * as style from "./style.css";
 
-import { addressIsZero } from "src/helpers/web3/addressIsZero";
-import { Button } from "preact-material-components/ts/Button";
 import "preact-material-components/Button/style.css";
+import { Button } from "preact-material-components/ts/Button";
+import { addressIsZero } from "src/helpers/web3/addressIsZero";
 
 interface Props {
   board: FourConnectGame | null;
@@ -45,6 +45,9 @@ export const BoardControls = ({
       </div>
     );
   }
+
+  console.warn(board.winner);
+
 
   const isRunning = board.running === true;
   const yourTurn =

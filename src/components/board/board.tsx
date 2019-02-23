@@ -1,6 +1,6 @@
-import { h } from 'preact';
-import Row from '../row';
-import * as style from './style.css';
+import { h } from "preact";
+import Row from "../row";
+import * as style from "./style.css";
 
 interface BoardProps {
   cells: number[];
@@ -15,7 +15,7 @@ export const Board = (props: BoardProps) => {
   let row: number[] = [];
 
   // TODO: [mr] map? or work with css-grid
-  Object.keys(props.cells).forEach(i => {
+  Object.keys(props.cells).forEach((i) => {
     const cell: number = props.cells[i];
 
     row.push(cell);
@@ -29,7 +29,7 @@ export const Board = (props: BoardProps) => {
           playersTurn={props.playersTurn}
           onClick={props.onClick}
           onMouseOver={props.onMouseOver}
-        />
+        />,
       );
       row = [];
     }

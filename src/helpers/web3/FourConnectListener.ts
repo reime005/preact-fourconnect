@@ -1,7 +1,7 @@
 import { Drizzle, generateStore } from "drizzle";
+import Web3 from "web3/types";
 import { delay } from "../delay";
 import getWeb3 from "./getWeb3";
-import Web3 from "web3/types";
 
 type GameMode = "new" | "old";
 
@@ -55,8 +55,8 @@ export class FourConnectListener {
 
         let state = {
           drizzleStatus: {
-            initialized: false
-          }
+            initialized: false,
+          },
         };
 
         while (state.drizzleStatus && !state.drizzleStatus.initialized) {
@@ -65,11 +65,11 @@ export class FourConnectListener {
           await delay(2000);
         }
 
-        
+
 
         if (state.drizzleStatus && state.drizzleStatus.initialized) {
           const maxCreationTimeout = await this.callMethod(
-            "getMaxCreationTimeout"
+            "getMaxCreationTimeout",
           );
           const maxMoveTimeout = await this.callMethod("getMaxMoveTimeout");
 
@@ -89,7 +89,7 @@ export class FourConnectListener {
   public subscribeEvent(
     eventName: string,
     callback: (error: any, evt: any) => void,
-    args: any = {}
+    args: any = {},
   ) {
     const state =
       this.drizzle && this.drizzle.store && this.drizzle.store.getState();
@@ -107,12 +107,12 @@ export class FourConnectListener {
       this.unsubscribeEvent(eventName);
     }
 
-    events[eventName]({ ...args }).on("data", evt => {
+    events[eventName]({ ...args }).on("data", (evt) => {
       console.log(evt);
       console.log(args.filter);
-      
+
       if (args.filter) {
-        Object.keys(args.filter).forEach(key => {
+        Object.keys(args.filter).forEach((key) => {
           if (args.filter[key].includes(evt.returnValues[key])) {
             callback(null, evt);
           }
@@ -127,14 +127,14 @@ export class FourConnectListener {
 
   public unsubscribeEvent(eventName: string) {
     if (this.eventSubscriptions[eventName]) {
-      //TODO: [mr] remove listener
+      // TODO: [mr] remove listener
       delete this.eventSubscriptions[eventName];
     }
   }
 
   public unsubscribeAllEvents() {
-    Object.keys(this.eventSubscriptions).forEach(key => {
-      //TODO: [mr] remove listener
+    Object.keys(this.eventSubscriptions).forEach((key) => {
+      // TODO: [mr] remove listener
       delete this.eventSubscriptions[key];
     });
   }
@@ -175,7 +175,7 @@ export class FourConnectListener {
         }
       }
 
-      rej('callMethod issue');
+      rej("callMethod issue");
     });
   }
 
@@ -218,8 +218,8 @@ export class FourConnectListener {
       ) {
         res(
           this.drizzle.contracts.FourConnect.methods[methodName].cacheSend(
-            ...args
-          )
+            ...args,
+          ),
         );
         return;
       }
@@ -229,7 +229,7 @@ export class FourConnectListener {
   }
 
   public async stop(): Promise<any> {
-    return new Promise(res => {
+    return new Promise((res) => {
       if (!this.pollForChangesId) {
         clearInterval(this.pollForChangesId);
         res();

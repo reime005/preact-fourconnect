@@ -1,5 +1,2 @@
 {
-  "tslint.autoFixOnSave": true,
-  "javascript.format.enable": true,
-  "eslint.autoFixOnSave": true
 }

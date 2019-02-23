@@ -6780,7 +6780,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-20T21:53:40.704Z",
+  "updatedAt": "2019-02-23T14:29:47.538Z",
   "devdoc": {
     "methods": {
       "isContractOwner()": {

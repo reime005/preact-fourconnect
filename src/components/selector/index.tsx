@@ -1,19 +1,19 @@
-import { h, Component } from 'preact';
+import { Component, h } from "preact";
 
-import Select from 'preact-material-components/ts/Select';
-import 'preact-material-components/List/style.css';
-import 'preact-material-components/Menu/style.css';
-import 'preact-material-components/Select/style.css';
+import "preact-material-components/List/style.css";
+import "preact-material-components/Menu/style.css";
+import "preact-material-components/Select/style.css";
+import Select from "preact-material-components/ts/Select";
 
 interface Props {
-  chosenIndex: number,
-  options: any[],
-  hintText: string,
-  onChange: (e: Event & {target: EventTarget & {selectedIndex: number}}) => void
+  chosenIndex: number;
+  options: any[];
+  hintText: string;
+  onChange: (e: Event & {target: EventTarget & {selectedIndex: number}}) => void;
 }
 
 interface State {
-  
+
 }
 
 export class Selector extends Component<Props, State> {
@@ -22,15 +22,15 @@ export class Selector extends Component<Props, State> {
 
     this.state = {
 
-    }
+    };
   }
 
-  render({ options, chosenIndex, hintText, onChange }: Props, {}: State) {
+  public render({ options, chosenIndex, hintText, onChange }: Props, {}: State) {
     return (
       <div>
         {
           options.length > 0 ? (
-          <Select 
+          <Select
             style={{
               width: 200,
             }}
@@ -38,7 +38,7 @@ export class Selector extends Component<Props, State> {
             selectedIndex={chosenIndex}
             onChange={onChange}>
               {
-                options.map(option => <Select.Item>{String(option)}</Select.Item>)
+                options.map((option) => <Select.Item>{String(option)}</Select.Item>)
               }
           </Select>)
           : null

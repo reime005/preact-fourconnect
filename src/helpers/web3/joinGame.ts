@@ -2,7 +2,7 @@ import FourConnectListener from "./FourConnectListener";
 
 export const joinGame = async (
   fourConnectListener: FourConnectListener,
-  gameId?: number | null
+  gameId?: number | null,
 ) => {
   try {
     if (!gameId) {

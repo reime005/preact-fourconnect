@@ -1,24 +1,27 @@
 import { Component, h } from "preact";
 
-import { Board } from "../../components/board/board";
-import drizzleOptions, { fourConnectEvents } from "../../const/drizzleOptions";
-import FourConnectListener from "../../helpers/web3/FourConnectListener";
-import { Selector } from "../../components/selector";
-import { Dialog } from "../../components/dialog";
-import { getBoardData } from "../../helpers/web3/getBoardData";
-import { nextFreeCell } from "../../lib/nextFreeCell";
-import { getEtherInGame } from "../../lib/getEtherInGame";
-import { newGame } from "../../../src/helpers/web3/newGame";
+import { BoardControls } from "src/components/boardControls/boardControls";
+import { Events } from "src/components/events/events";
+import { LoadingContainer } from "src/components/loadingContainer/LoadingContainer";
+import { cancelCreatedGame } from "src/helpers/web3/cancelCreatedGame";
+import { claimTimeoutVictory } from "src/helpers/web3/claimTimeoutVictory";
+import { giveUp } from "src/helpers/web3/giveUp";
+import { withdraw } from "src/helpers/web3/withdraw";
 import { joinGame } from "../../../src/helpers/web3/joinGame";
 import { makeMove } from "../../../src/helpers/web3/makeMove";
-import { BoardControls } from "src/components/boardControls/boardControls";
-import { LoadingContainer } from "src/components/loadingContainer/LoadingContainer";
-import { claimTimeoutVictory } from "src/helpers/web3/claimTimeoutVictory";
-import { withdraw } from "src/helpers/web3/withdraw";
-import { giveUp } from "src/helpers/web3/giveUp";
-import { cancelCreatedGame } from "src/helpers/web3/cancelCreatedGame";
-import { Events } from "src/components/events/events";
+import { newGame } from "../../../src/helpers/web3/newGame";
+import { Board } from "../../components/board/board";
+import { Dialog } from "../../components/dialog";
+import { Selector } from "../../components/selector";
+import drizzleOptions, { fourConnectEvents } from "../../const/drizzleOptions";
+import FourConnectListener from "../../helpers/web3/FourConnectListener";
+import { getBoardData } from "../../helpers/web3/getBoardData";
+import { getEtherInGame } from "../../lib/getEtherInGame";
+import { nextFreeCell } from "../../lib/nextFreeCell";
 
+import { makeMoveAndClaimVictory } from "src/helpers/web3/makeMoveAndClaimVictory";
+import { gameEnd } from "src/lib/gameLogic";
+import { nextPlayer } from "src/lib/nextPlayer";
 import * as style from "./style.css";
 
 interface Props {}
@@ -46,17 +49,17 @@ interface State {
     [eventName: string]: {
       [blockNumber: string]: {
         timestamp: Date,
-        gameId: number
+        gameId: number,
       };
     };
   };
 }
 
 class Web3Route extends Component<Props, State> {
-  fourConnectListener: FourConnectListener;
-  poll: any;
-  joinGameDialogRef: any;
-  newRestrictedGame: any;
+  public fourConnectListener: FourConnectListener;
+  public poll: any;
+  public joinGameDialogRef: any;
+  public newRestrictedGame: any;
 
   constructor(props) {
     super(props);
@@ -78,11 +81,11 @@ class Web3Route extends Component<Props, State> {
       gameIds: [],
       initialized: false,
       lastEvents: {},
-      selectedGameId: 0
+      selectedGameId: 0,
     };
 
     this.fourConnectListener = new FourConnectListener({
-      options: { gameMode: "new", drizzleOptions }
+      options: { gameMode: "new", drizzleOptions },
     });
 
     // this.startPolling = this.startPolling.bind(this);
@@ -102,20 +105,6 @@ class Web3Route extends Component<Props, State> {
 
   public componentWillUnmount() {
     clearInterval(this.poll);
-  }
-
-  private async joinGame() {
-    try {
-      const openGameId = await this.fourConnectListener.callMethod(
-        "getOpenGameId"
-      );
-
-      this.setState({ openGameId });
-    } catch (e) {
-      console.error(e);
-    }
-
-    this.joinGameDialogRef.MDComponent.show();
   }
 
   public async initialize() {
@@ -138,9 +127,9 @@ class Web3Route extends Component<Props, State> {
     const accounts = (await web3.eth.getAccounts()) || [];
 
     let lastEvents = {};
-    
+
     try {
-      lastEvents = JSON.parse(localStorage.getItem('events'));
+      lastEvents = JSON.parse(localStorage.getItem("events"));
     } catch (error) {
       console.warn(error);
     }
@@ -151,7 +140,7 @@ class Web3Route extends Component<Props, State> {
       initialized: true,
       maxCreationTimeout,
       maxMoveTimeout,
-      lastEvents
+      lastEvents,
     });
 
     this.getState();
@@ -159,7 +148,7 @@ class Web3Route extends Component<Props, State> {
 
   public async retrieve() {
     const status = await this.fourConnectListener.getStatus(
-      this.state.stackId || 0
+      this.state.stackId || 0,
     );
     console.warn(status);
   }
@@ -168,20 +157,20 @@ class Web3Route extends Component<Props, State> {
     try {
       let gameIds = await this.fourConnectListener.callMethod(
         "getPlayersIds",
-        this.state.accounts[0]
+        this.state.accounts[0],
       );
 
       if (!gameIds.length) {
-        throw "No games yet attended";
+        throw new Error("No games yet attended");
       }
 
       gameIds = gameIds.map((gameId: string) => Number(gameId));
 
       this.setState({
-        gameIds
+        gameIds,
       });
 
-      gameIds.forEach(async gameId => {
+      gameIds.forEach(async (gameId) => {
         try {
           this.refreshGame(gameId);
         } catch (error) {
@@ -190,115 +179,13 @@ class Web3Route extends Component<Props, State> {
       });
 
       this.setState({
-        selectedGameId: gameIds[this.state.chosenIndex - 1]
+        selectedGameId: gameIds[this.state.chosenIndex - 1],
       });
 
       this.initializeEventsForGames();
     } catch (e) {
       console.warn(e);
     }
-  }
-
-  private async refreshGame(gameId: number) {
-    const game = await getBoardData(this.fourConnectListener, gameId);
-
-    const games = {
-      ...this.state.games,
-      [gameId]: {
-        ...this.state.games[gameId],
-        ...game
-      }
-    };
-
-    this.setState({
-      games
-    });
-  }
-
-  private onCellClicked(column: number) {
-    const cellIndex = nextFreeCell(
-      column,
-      this.state.games[this.state.selectedGameId]
-    );
-
-    makeMove(this.fourConnectListener, this.state.selectedGameId, cellIndex);
-  }
-
-  private initializeEventsForGames() {
-    fourConnectEvents.forEach(eventName => {
-      if (eventName === "logGameInitialized") {
-        this.subscribeToEvent(eventName, false);
-      } else {
-        this.subscribeToEvent(eventName, true);
-      }
-    });
-  }
-
-  private subscribeToEvent(eventName: string, useFilter: boolean) {
-    let filter = null;
-
-    if (useFilter) {
-      filter = {
-        gameId: [...this.state.gameIds.map(i => String(i))]
-      };
-    }
-
-    this.fourConnectListener.subscribeEvent(
-      eventName,
-      async (error: any, evt: any) => {
-        if (!error) {
-          const gameId = evt.returnValues && evt.returnValues.gameId;
-          const { chosenIndex } = this.state;
-
-          const lastEvents = {
-            ...this.state.lastEvents,
-            [eventName]: {
-              ...this.state.lastEvents && this.state.lastEvents[eventName],
-              [evt.blockNumber]: {
-                timestamp: Date.now(),
-                gameId: evt.returnValues && evt.returnValues.gameId
-              }
-            }
-          }
-
-          localStorage.setItem('events', JSON.stringify(lastEvents));
-
-          this.setState({
-            lastEvents
-          });
-
-          if (this.state.gameIds.indexOf(Number(gameId)) != -1 ) {
-            await this.getState();
-            this.setState({ chosenIndex });
-          } 
-        } else {
-          console.error(error);
-        }
-      },
-      { filter }
-    );
-  }
-
-  private renderGameIdSelector() {
-    const { chosenIndex, gameIds } = this.state;
-
-    return <Selector
-      chosenIndex={chosenIndex}
-      hintText={"GameIds"}
-      options={gameIds}
-      onChange={(
-        e: Event & {
-          target: EventTarget & { selectedIndex: number };
-        }
-      ) => {
-        this.setState({
-          chosenIndex: e.target.selectedIndex,
-          selectedGameId: this.state.gameIds[
-            e.target.selectedIndex - 1
-          ]
-        });
-      }}
-    />
   }
 
   public render(
@@ -316,8 +203,8 @@ class Web3Route extends Component<Props, State> {
       joinGameId,
       createGameBidEth,
       lastEvents,
-      openGameId
-    }: State
+      openGameId,
+    }: State,
   ) {
     const ownPlayer = accounts[0];
     const selectedGame = games[selectedGameId] || null;
@@ -374,7 +261,7 @@ class Web3Route extends Component<Props, State> {
                 ethToWin={getEtherInGame(
                   (selectedGame && selectedGame.bidPlayerOne) || "0",
                   (selectedGame && selectedGame.bidPlayerTwo) || "0",
-                  web3
+                  web3,
                 )}
                 joinGame={() => this.joinGame()}
                 withdraw={() =>
@@ -409,7 +296,7 @@ class Web3Route extends Component<Props, State> {
           <Events events={lastEvents} />
 
           <Dialog
-          setRef={joinGameDialogRef =>
+          setRef={(joinGameDialogRef) =>
             (this.joinGameDialogRef = joinGameDialogRef)
           }
           acceptText={"Join Game"}
@@ -423,18 +310,18 @@ class Web3Route extends Component<Props, State> {
               label: `Specific Game ID? ${
                 openGameId > 0 ? "(" + openGameId + " is open)" : ""
               }`,
-              onKeyUp: joinGameId =>
-                this.setState({ joinGameId: Number(joinGameId) })
+              onKeyUp: (joinGameId) =>
+                this.setState({ joinGameId: Number(joinGameId) }),
             },
             payment: {
               label: "Your bid? (in ETH)",
-              onKeyUp: joinGameBidEth => this.setState({ joinGameBidEth })
-            }
+              onKeyUp: (joinGameBidEth) => this.setState({ joinGameBidEth }),
+            },
           }}
         />
 
         <Dialog
-          setRef={newRestrictedGame =>
+          setRef={(newRestrictedGame) =>
             (this.newRestrictedGame = newRestrictedGame)
           }
           acceptText={opponentsAddress ? "New restricted game" : "New game"}
@@ -444,26 +331,153 @@ class Web3Route extends Component<Props, State> {
               this.fourConnectListener,
               accounts[0],
               createGameBidEth,
-              opponentsAddress
+              opponentsAddress,
             )
           }
           headerText={"Create a new Game"}
           inputTexts={{
             gameId: {
               label: "Opponent's address? (optional)",
-              onKeyUp: opponentsAddress => this.setState({ opponentsAddress })
+              onKeyUp: (opponentsAddress) => this.setState({ opponentsAddress }),
             },
             payment: {
               label: "Your bid? (in ETH) (optional)",
-              onKeyUp: createGameBidEth => this.setState({ createGameBidEth })
-            }
+              onKeyUp: (createGameBidEth) => this.setState({ createGameBidEth }),
+            },
           }}
         />
         </div>
 
-        
+
       </LoadingContainer>
     );
+  }
+
+  private async joinGame() {
+    try {
+      const openGameId = await this.fourConnectListener.callMethod(
+        "getOpenGameId",
+      );
+
+      this.setState({ openGameId });
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.joinGameDialogRef.MDComponent.show();
+  }
+
+  private async refreshGame(gameId: number) {
+    const game = await getBoardData(this.fourConnectListener, gameId);
+
+    const games = {
+      ...this.state.games,
+      [gameId]: {
+        ...this.state.games[gameId],
+        ...game,
+      },
+    };
+
+    this.setState({
+      games,
+    });
+  }
+
+  private onCellClicked(column: number) {
+    const game = this.state.games[this.state.selectedGameId];
+
+    const cellIndex = nextFreeCell(
+      column,
+      game,
+    );
+
+    const cells = [...game.cells];
+    cells[cellIndex] = nextPlayer(game.currentPlayer) ;
+
+    const end = gameEnd(cellIndex, { cells, currentPlayer: game.currentPlayer });
+
+    if (end.isGameEnd) {
+      makeMoveAndClaimVictory(this.fourConnectListener, this.state.selectedGameId, cellIndex, end.winningCells.map((cell) => cell.i));
+    } else {
+      makeMove(this.fourConnectListener, this.state.selectedGameId, cellIndex);
+    }
+  }
+
+  private initializeEventsForGames() {
+    fourConnectEvents.forEach((eventName) => {
+      if (eventName === "logGameInitialized") {
+        this.subscribeToEvent(eventName, false);
+      } else {
+        this.subscribeToEvent(eventName, true);
+      }
+    });
+  }
+
+  private subscribeToEvent(eventName: string, useFilter: boolean) {
+    let filter = null;
+
+    if (useFilter) {
+      filter = {
+        gameId: [...this.state.gameIds.map((i) => String(i))],
+      };
+    }
+
+    this.fourConnectListener.subscribeEvent(
+      eventName,
+      async (error: any, evt: any) => {
+        if (!error) {
+          const gameId = evt.returnValues && evt.returnValues.gameId;
+          const { chosenIndex } = this.state;
+
+          const lastEvents = {
+            ...this.state.lastEvents,
+            [eventName]: {
+              ...this.state.lastEvents && this.state.lastEvents[eventName],
+              [evt.blockNumber]: {
+                timestamp: Date.now(),
+                gameId: evt.returnValues && evt.returnValues.gameId,
+              },
+            },
+          };
+
+          localStorage.setItem("events", JSON.stringify(lastEvents));
+
+          this.setState({
+            lastEvents,
+          });
+
+          if (this.state.gameIds.indexOf(Number(gameId)) !== -1 ) {
+            await this.getState();
+            this.setState({ chosenIndex });
+          }
+        } else {
+          console.error(error);
+        }
+      },
+      { filter },
+    );
+  }
+
+  private renderGameIdSelector() {
+    const { chosenIndex, gameIds } = this.state;
+
+    return <Selector
+      chosenIndex={chosenIndex}
+      hintText={"GameIds"}
+      options={gameIds}
+      onChange={(
+        e: Event & {
+          target: EventTarget & { selectedIndex: number };
+        },
+      ) => {
+        this.setState({
+          chosenIndex: e.target.selectedIndex,
+          selectedGameId: this.state.gameIds[
+            e.target.selectedIndex - 1
+          ],
+        });
+      }}
+    />;
   }
 }
 

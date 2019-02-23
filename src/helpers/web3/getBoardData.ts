@@ -2,9 +2,9 @@ import { FourConnectListener } from "./FourConnectListener";
 
 export const getBoardData = async (
   fourconnectListener: FourConnectListener,
-  gameId: number
+  gameId: number,
 ) => {
-  return new Promise<FourConnectGame>(async res => {
+  return new Promise<FourConnectGame>(async (res) => {
     let cells: any[] = [];
     let running = false;
     let lastTimePlayed = new Date();
@@ -18,31 +18,31 @@ export const getBoardData = async (
 
     try {
       cells = await fourconnectListener.callMethod("getBoard", gameId);
-      cells = cells.map(cell => Number(cell));
+      cells = cells.map((cell) => Number(cell));
 
       const lastTimePlayedN = await fourconnectListener.callMethod(
         "getLastTimePlayed",
-        gameId
+        gameId,
       );
       lastTimePlayed = new Date(Number(lastTimePlayedN));
 
       const creationTimeN = await fourconnectListener.callMethod(
         "getCreationTime",
-        gameId
+        gameId,
       );
       creationTime = new Date(Number(creationTimeN));
 
       bidPlayerOne = await fourconnectListener.callMethod(
         "getBidPlayerOne",
-        gameId
+        gameId,
       );
       bidPlayerTwo = await fourconnectListener.callMethod(
         "getBidPlayerTwo",
-        gameId
+        gameId,
       );
       currentPlayer = await fourconnectListener.callMethod(
         "getCurrentPlayer",
-        gameId
+        gameId,
       );
       running = await fourconnectListener.callMethod("getRunning", gameId);
       playerOne = await fourconnectListener.callMethod("getPlayerOne", gameId);
@@ -62,7 +62,7 @@ export const getBoardData = async (
       bidPlayerOne,
       bidPlayerTwo,
       creationTime,
-      winner
+      winner,
     });
   });
 };

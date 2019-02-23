@@ -1,4 +1,4 @@
-import { CELL_SUM, boardSize, players } from "../const/boardConfig";
+import { boardSize, CELL_SUM, players } from "../const/boardConfig";
 
 export const nextFreeCell = (column, board) => {
   for (
@@ -11,5 +11,5 @@ export const nextFreeCell = (column, board) => {
     }
   }
 
-  throw "No empty cells in this column";
+  throw new Error("No empty cells in this column");
 };

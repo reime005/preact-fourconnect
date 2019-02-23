@@ -1,5 +1,5 @@
 export class OfflineListener {
-  onChange: (isOnline: boolean) => {};
+  public onChange: (isOnline: boolean) => {};
 
   constructor(props) {
     this.onChange = props.onChange.bind(this);
@@ -7,22 +7,22 @@ export class OfflineListener {
     this.onOnline = this.onOnline.bind(this);
   }
 
-  onOffline() {
+  public onOffline() {
     this.onChange(false);
   }
 
-  onOnline() {
+  public onOnline() {
     this.onChange(true);
   }
 
-  start() {
+  public start() {
     this.onChange(window.navigator.onLine);
 
     window.addEventListener("offline", this.onOffline, false);
     window.addEventListener("online", this.onOnline, false);
   }
 
-  stop() {
+  public stop() {
     window.removeEventListener("offline", this.onOffline);
     window.removeEventListener("online", this.onOnline);
   }

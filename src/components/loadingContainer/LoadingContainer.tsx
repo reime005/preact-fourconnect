@@ -1,5 +1,5 @@
-import Web3 from "web3/types";
 import { Component, h } from "preact";
+import Web3 from "web3/types";
 
 interface Props {
   web3: any;
@@ -18,7 +18,7 @@ export const LoadingContainer = ({
   loadingComp,
   drizzleStatus,
   accounts,
-  children
+  children,
 }: Props) => {
   if (web3.status === "failed") {
     if (errorComp) {
