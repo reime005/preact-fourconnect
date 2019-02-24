@@ -8,6 +8,7 @@ html, body {
 	color: rgb(53, 53, 53);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: rgb(235, 232, 232);
 }
 
 * {
@@ -32,9 +33,11 @@ html, body {
   }
 }
 
+.mdc-button.mdc-ripple-upgraded,
 .mdc-button--raised:not(:disabled),
 .mdc-theme--on-primary,
 .mdc-button {
 	background-color: hsl(214.1, 51.9%, 50%);
+	color: white;
 }
 

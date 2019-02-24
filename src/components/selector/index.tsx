@@ -1,8 +1,5 @@
 import { Component, h } from "preact";
 
-import "preact-material-components/List/style.css";
-import "preact-material-components/Menu/style.css";
-import "preact-material-components/Select/style.css";
 import Select from "preact-material-components/ts/Select";
 
 interface Props {

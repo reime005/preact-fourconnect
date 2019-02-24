@@ -21,7 +21,7 @@
 }
 
 .header nav {
-	float: right;
+	float: left;
 	font-size: 100%;
 }
 
@@ -44,5 +44,4 @@
 }
 
 .header nav a.active {
-	background: rgba(0,0,0,0.4);
 }

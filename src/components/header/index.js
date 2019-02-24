@@ -2,20 +2,12 @@ import { h } from "preact";
 import { Link } from "preact-router/match";
 import style from "./style";
 
-const Header = ({ isOnline }) => (
+const Header = ({ }) => (
   <header class={style.header}>
-    <h1>Connect Four</h1>
     <nav>
-      {isOnline && (
-        <Link activeClassName={style.active} href="/profile/john">
-          Online
-        </Link>
-      )}
-      {!isOnline && (
-        <Link activeClassName={style.active} href="/">
-          Offline
-        </Link>
-      )}
+      <Link activeClassName={style.active} href="/">
+        <h1>Connect Four</h1>
+      </Link>
     </nav>
   </header>
 );

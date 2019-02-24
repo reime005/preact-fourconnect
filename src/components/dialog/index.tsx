@@ -62,8 +62,8 @@ export class Dialog extends Component<Props, State> {
             </MatDialog.Body>
 
             <MatDialog.Footer>
-              <MatDialog.FooterButton  cancel={true}>{declineText}</MatDialog.FooterButton>
-              <MatDialog.FooterButton accept={true}>{acceptText}</MatDialog.FooterButton>
+              <MatDialog.FooterButton raised cancel={true}>{declineText}</MatDialog.FooterButton>
+              <MatDialog.FooterButton raised accept={true}>{acceptText}</MatDialog.FooterButton>
             </MatDialog.Footer>
           </MatDialog>
         }

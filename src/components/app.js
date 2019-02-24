@@ -27,15 +27,8 @@ export default class App extends Component {
     this.offlineListener = new OfflineListener({
       onChange: isOnline => this.setState({ isOnline })
     });
+
     this.offlineListener.start();
-
-    // let board = JSON.parse(localStorage.getItem("fourconnect.board"));
-    // console.warn(board);
-
-    // if (!board.isGameEnd && board.cells) {
-    //   // route('/game');
-    //   this.setState({ isRunning: true });
-    // }
   }
 
   componentWillUnmount() {
@@ -47,11 +40,9 @@ export default class App extends Component {
    *	@param {string} event.url	The newly routed URL
    */
   handleRoute = e => {
-    // if (this.state.isRunning) {
-    // 	route('/game');
-    // } else {
-    // 	route('/');
-    // }
+    if (!e.previous) {
+      route("/web3", true);
+    }
   };
 
   onNewGame() {
