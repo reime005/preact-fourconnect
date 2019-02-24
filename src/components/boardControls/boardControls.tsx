@@ -1,7 +1,6 @@
 import { Component, h } from "preact";
 import * as style from "./style.css";
 
-import "preact-material-components/Button/style.css";
 import { Button } from "preact-material-components/ts/Button";
 import { addressIsZero } from "src/helpers/web3/addressIsZero";
 
@@ -17,6 +16,7 @@ interface Props {
   cancelCreatedGame: () => void;
   joinGame: () => void;
   refreshState: () => void;
+  refreshAllState: () => void;
 }
 
 export const BoardControls = ({
@@ -31,23 +31,18 @@ export const BoardControls = ({
   joinGame,
   gameIdSelector,
   refreshState,
+  refreshAllState,
 }: Props) => {
+  // provide basic buttons even if no games yet attended
   if (!board) {
     return (
       <div class={style.container}>
-        <div>
-          <Button raised onClick={joinGame}>Join a Game</Button>
-          <Button raised onClick={refreshState}>Refresh</Button>
-        </div>
-        <div>
-          <Button raised onClick={newGame}>New Game</Button>
-        </div>
+        <Button raised onClick={refreshAllState}>Refresh All</Button>
+        <Button raised onClick={joinGame}>Join a Game</Button>
+        <Button raised onClick={newGame}>New Game</Button>
       </div>
     );
   }
-
-  console.warn(board.winner);
-
 
   const isRunning = board.running === true;
   const yourTurn =
@@ -57,23 +52,17 @@ export const BoardControls = ({
   const isGameOver = !isRunning && !addressIsZero(board.winner);
   const winnerIsYou = isGameOver && ownPlayer === board.winner;
 
-  // alert(ownPlayer + ' == ' + board.winner)
-
   return (
     <div class={style.container}>
-    {/* <p>{JSON.stringify(board)}</p> */}
+
       <div>
         {gameIdSelector}
       </div>
 
-      <div>
-        <Button raised onClick={newGame}>New Game</Button>
-      </div>
-
-      <div>
-        <Button raised onClick={joinGame}>Join a Game</Button>
-        <Button raised onClick={refreshState}>Refresh</Button>
-      </div>
+      <Button raised onClick={refreshAllState}>Refresh All</Button>
+      <Button raised onClick={refreshState}>Refresh</Button>
+      <Button raised onClick={joinGame}>Join a Game</Button>
+      <Button raised onClick={newGame}>New Game</Button>
 
       {!isRunning && !isGameOver && (
         <div>
@@ -82,15 +71,13 @@ export const BoardControls = ({
       )}
 
       {!isRunning && (
-        <div>
-          <Button raised onClick={cancelCreatedGame}>Cancel Created Game</Button>
-        </div>
+        <Button raised onClick={cancelCreatedGame}>Cancel Created Game</Button>
       )}
 
       {isRunning && !isGameOver && ethToWin && (
         <div>
-            <p>The game is running.</p>
-            <p>There is {ethToWin} ETH to win!</p>
+          <p>The game is running.</p>
+          <p>There is {ethToWin} ETH to win!</p>
         </div>
       )}
 
@@ -109,9 +96,7 @@ export const BoardControls = ({
       )}
 
       {isGameOver && (
-        <div>
-          <p>The game is over.</p>
-        </div>
+        <p>The game is over.</p>
       )}
 
       {isGameOver && winnerIsYou && (

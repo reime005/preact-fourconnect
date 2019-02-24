@@ -32,12 +32,7 @@ export const Events = ({
   return (
 
 
-  <div style={{
-    padding: 15,
-    margin: 5,
-    backgroundColor: "darkgrey",
-    borderRadius: 5,
-    right: 5}}>
+  <div class={style.outer}>
     <div>
       <Button style={{justifyContent: "right", marginBottom: 10}} raised onClick={clearLocalStorage}>Clear Local Events</Button>
     </div>
@@ -55,7 +50,7 @@ export const Events = ({
 
         return <div>
           {blockNumbers.map((blockNumber: string) => <div class={style.item}>
-            <span>{eventName}</span>
+            <span>{eventName.replace("logGame", "")}</span>
             {/* <span>{blockNumber}</span> */}
             <span>{events[eventName][blockNumber].gameId}</span>
             <span>{new Date(events[eventName][blockNumber].timestamp).toLocaleString()}</span>

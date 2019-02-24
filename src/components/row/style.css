@@ -4,10 +4,5 @@
 	flex-direction: row;
 	width: 100%;
 	height: auto;
-	background-color: white;
+	justify-content: center;
 }
-
-/* .container:hover,
-.container:active {
-	background-color: whitesmoke;
-} */

@@ -1,11 +1,9 @@
 import { Component, h } from "preact";
 
 // import Button from 'preact-material-components/ts/Button';
-import "preact-material-components/Dialog/style.css";
 import MatDialog from "preact-material-components/ts/Dialog";
 
 import TextField from "preact-material-components/TextField";
-import "preact-material-components/TextField/style.css";
 
 interface Props {
   onAccept: JSX.GenericEventHandler;

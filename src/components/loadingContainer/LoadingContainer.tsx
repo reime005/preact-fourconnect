@@ -1,5 +1,5 @@
 import { Component, h } from "preact";
-import Web3 from "web3/types";
+import * as style from "./style.css";
 
 interface Props {
   web3: any;
@@ -67,11 +67,11 @@ export const LoadingContainer = ({
   }
 
   return (
-    <main className="container loading-screen">
+    <main class={style.container}>
       <div className="pure-g">
         <div className="pure-u-1-1">
           <h1>⚙️</h1>
-          <p>Loading dapp...</p>
+          <p>Loading Four Connect DApp...</p>
         </div>
       </div>
     </main>

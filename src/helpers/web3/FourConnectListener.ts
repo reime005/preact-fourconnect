@@ -20,6 +20,7 @@ export class FourConnectListener {
   private drizzle: Drizzle;
   private web3: Web3;
   private options: Options;
+  private contract: any;
   private eventSubscriptions: {
     [eventName: string]: string;
   };
@@ -65,7 +66,7 @@ export class FourConnectListener {
           await delay(2000);
         }
 
-
+        this.contract = this.drizzle.contracts.FourConnect;
 
         if (state.drizzleStatus && state.drizzleStatus.initialized) {
           const maxCreationTimeout = await this.callMethod(
@@ -86,6 +87,10 @@ export class FourConnectListener {
     return this.web3;
   }
 
+  public async getAllPastEvents(eventName: string, filter: object = {}): Promise<object[]> {
+    return await this.contract.getPastEvents(eventName, { filter });
+  }
+
   public subscribeEvent(
     eventName: string,
     callback: (error: any, evt: any) => void,
@@ -104,13 +109,12 @@ export class FourConnectListener {
     }
 
     if (this.eventSubscriptions[eventName]) {
-      this.unsubscribeEvent(eventName);
+      return;
     }
 
-    events[eventName]({ ...args }).on("data", (evt) => {
-      console.log(evt);
-      console.log(args.filter);
+    this.eventSubscriptions[eventName] = eventName;
 
+    events[eventName]({ ...args }).on("data", (evt) => {
       if (args.filter) {
         Object.keys(args.filter).forEach((key) => {
           if (args.filter[key].includes(evt.returnValues[key])) {
@@ -122,7 +126,6 @@ export class FourConnectListener {
       }
     });
 
-    this.eventSubscriptions[eventName] = eventName;
   }
 
   public unsubscribeEvent(eventName: string) {

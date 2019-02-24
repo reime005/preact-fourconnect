@@ -26,7 +26,7 @@
 @media (min-width: 768px) {
 	.gameContainer {
     display: grid;
-    grid-template-rows: 1fr 3fr;
+    grid-template-rows: 2fr 4fr;
 		grid-row-gap: 10px;
   }
 }

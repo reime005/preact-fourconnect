@@ -8,7 +8,7 @@ export const CELL_SUM = boardSize.rows * boardSize.columns;
 export const WINNER_COUNT = 4;
 
 export const colors = {
-  CELL_DEFAULT: "#4b7ffa",
+  CELL_DEFAULT: "hsl(214.1, 51.9%, 50%)",
   CELL_SELECTED: "#ddd",
   CELL_SET_RED: "#e85d5a",
   CELL_SET_YELLOW: "#f7f297",

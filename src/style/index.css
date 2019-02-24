@@ -3,10 +3,9 @@ html, body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #FAFAFA;
 	font-family: 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
-	color: #444;
+	color: rgb(53, 53, 53);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -32,3 +31,10 @@ html, body {
     grid-template-rows: auto 1fr;
   }
 }
+
+.mdc-button--raised:not(:disabled),
+.mdc-theme--on-primary,
+.mdc-button {
+	background-color: hsl(214.1, 51.9%, 50%);
+}
+

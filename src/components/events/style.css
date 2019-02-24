@@ -1,15 +1,17 @@
 .container {
 	flex-direction: column;
-	padding: 25;
 }
 
 .outer {
+	padding: 15px;
+	margin: 0 5px 5px 5px;
+	border-radius: 5px;
+	background-color: hsl(214.1, 51.9%, 90%);
 }
 
 .item {
 	display: grid;
-	color: white;
-	grid-template-columns: repeat(3, minmax(3vw, 7vw));
+	grid-template-columns: repeat(3, minmax(2vw, 8vw));
 	justify-content: center;
 	text-align: center;
 }

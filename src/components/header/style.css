@@ -5,7 +5,7 @@
 	height: 100%;
 	padding: 0;
   grid-column: span 3;
-	background: #673AB7;
+	background:  hsl(214.1, 51.9%, 40%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	z-index: 50;
 }

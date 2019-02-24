@@ -144,6 +144,8 @@ class Web3Route extends Component<Props, State> {
     });
 
     this.getState();
+
+    this.getAllPastEvents();
   }
 
   public async retrieve() {
@@ -223,41 +225,13 @@ class Web3Route extends Component<Props, State> {
         drizzleStatus={{ initialized }}
       >
         <div style={{ margin: 15 }} class={style.container}>
-          {/* <button onClick={() => this.getState()}>state</button>
-          {/* <button onClick={() => this.createGame()}>create new game</button>
-          <button onClick={() => {}}>claim timeout win</button>
-          <button onClick={() => this.newRestrictedGame.MDComponent.show()}>
-            new game
-          </button> */}
-
-          {/* {gameIds.length ? (
-            <div>
-              <Selector
-                chosenIndex={chosenIndex}
-                hintText={"GameIds"}
-                options={gameIds}
-                onChange={(
-                  e: Event & {
-                    target: EventTarget & { selectedIndex: number };
-                  }
-                ) => {
-                  this.setState({
-                    chosenIndex: e.target.selectedIndex,
-                    selectedGameId: this.state.gameIds[
-                      e.target.selectedIndex - 1
-                    ]
-                  });
-                }}
-              />
-            </div>
-          ) : null} */}
-
           <div class={style.gameContainer}>
             <div>
               <BoardControls
                 board={selectedGame}
                 ownPlayer={ownPlayer}
                 refreshState={() => this.refreshGame(this.state.selectedGameId)}
+                refreshAllState={() => this.getState()}
                 ethToWin={getEtherInGame(
                   (selectedGame && selectedGame.bidPlayerOne) || "0",
                   (selectedGame && selectedGame.bidPlayerTwo) || "0",
@@ -403,6 +377,12 @@ class Web3Route extends Component<Props, State> {
     }
   }
 
+  private async getAllPastEvents() {
+    // const evts = await this.fourConnectListener.getAllPastEvents("logGameInitialized", { gameId: [...this.state.gameIds] });
+
+    // console.error(evts);
+  }
+
   private initializeEventsForGames() {
     fourConnectEvents.forEach((eventName) => {
       if (eventName === "logGameInitialized") {
@@ -463,7 +443,7 @@ class Web3Route extends Component<Props, State> {
 
     return <Selector
       chosenIndex={chosenIndex}
-      hintText={"GameIds"}
+      hintText={"Selected Game"}
       options={gameIds}
       onChange={(
         e: Event & {

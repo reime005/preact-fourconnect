@@ -1,4 +1,7 @@
 .container {
 	display: flex;
-	margin: 50;
+	flex: 1;
+	justify-content: center;
+	text-align: center;
+	margin: 10px;
 }

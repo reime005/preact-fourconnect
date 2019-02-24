@@ -4,8 +4,10 @@
 	margin: 10;
 	padding: 10;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	text-align: center;
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
 }
 
 .container div {
