@@ -12,10 +12,9 @@ import { nextFreeCell } from "../../lib/nextFreeCell";
 
 class GameView extends Component {
   async _resetState() {
-    let board = null; //JSON.parse(localStorage.getItem("fourconnect.board"));
+    let board = JSON.parse(localStorage.getItem("fourconnect.board"));
 
     if (board && board.isGameEnd) {
-      console.warn("done");
       board = null;
     }
 
@@ -31,7 +30,7 @@ class GameView extends Component {
         board = newBoard(players.NONE);
       }
 
-      //TODO: [mr] calc current/first player here
+      // first player is the client
       board.currentPlayer = players.ONE;
     }
 
@@ -44,6 +43,7 @@ class GameView extends Component {
     });
 
     if (hasAI && board.currentPlayer !== players.ONE) {
+      // AI delay
       await delay(Math.floor(Math.random() * 1500 + 500));
 
       board = await makeAIMove(board);
@@ -68,7 +68,6 @@ class GameView extends Component {
   async onGameEndClick() {
     await delay(500);
 
-    //await this.props.newGame(); --> new props
     this._resetState();
   }
 
