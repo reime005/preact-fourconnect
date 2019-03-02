@@ -84,6 +84,11 @@ export const BoardControls = ({
       {yourTurn && (
         <div>
           <p>It is your turn.</p>
+        </div>
+      )}
+
+      {yourTurn && (
+        <div>
           <Button raised onClick={giveUp}>Give Up</Button>
         </div>
       )}
@@ -91,6 +96,10 @@ export const BoardControls = ({
       {!yourTurn && (
         <div>
           <p>It is not your turn.</p>
+        </div>
+      )}
+      {!yourTurn && (
+        <div>
           <Button raised onClick={claimTimeout}>Claim Timeout</Button>
         </div>
       )}
@@ -102,6 +111,10 @@ export const BoardControls = ({
       {isGameOver && winnerIsYou && (
         <div>
           <p>You are the winner.</p>
+        </div>
+      )}
+      {isGameOver && winnerIsYou && (
+        <div>
           <Button raised onClick={withdraw}>Withdraw the price</Button>
         </div>
       )}

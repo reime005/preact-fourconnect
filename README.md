@@ -6,8 +6,7 @@ This repository demonstrates the usage of React, TypeScript and Solidity Smart C
 
 ``` bash
 # install dependencies
-npm install
-
+npm i
 # serve with hot reload at localhost:8080
 npm run dev
 

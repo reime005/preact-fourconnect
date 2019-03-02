@@ -22,7 +22,6 @@ export default class App extends Component {
 
     this.onNewGame = this.onNewGame.bind(this);
   }
-
   componentDidMount() {
     this.offlineListener = new OfflineListener({
       onChange: isOnline => this.setState({ isOnline })

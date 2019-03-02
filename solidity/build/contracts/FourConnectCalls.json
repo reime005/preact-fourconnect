@@ -6741,7 +6741,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-23T14:29:47.538Z",
+  "updatedAt": "2019-03-02T20:15:09.125Z",
   "devdoc": {
     "author": "Marius Reimer",
     "details": "This contract contains only external view / call methods",
