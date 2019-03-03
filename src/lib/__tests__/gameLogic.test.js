@@ -67,6 +67,21 @@ describe("makeMove", () => {
     board = makeMove(board, players.ONE, 35);
   });
 
+  test("should not fail", () => {
+    let board = newBoard();
+
+    board = makeMove(board, players.ONE, 35);
+    board = makeMove(board, players.TWO, 38);
+    board = makeMove(board, players.ONE, 36);
+    board = makeMove(board, players.TWO, 31);
+    board = makeMove(board, players.ONE, 37);
+    board = makeMove(board, players.TWO, 24);
+    board = makeMove(board, players.ONE, 41);
+    board = makeMove(board, players.TWO, 17);
+
+    expect(gameEnd(17, board).isGameEnd).toEqual(true);
+  });
+
   test("should run a straight game", () => {
     let board = newBoard();
 
