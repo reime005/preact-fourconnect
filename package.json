@@ -1,8 +1,19 @@
 {
-  "private": false,
   "name": "preact-fourconnect",
   "version": "0.0.1",
   "license": "MIT",
+  "author": "Marius Reimer (reime005) <reime005@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reime005/preact-fourconnect"
+  },
+  "keywords": [
+    "preact",
+    "dapp",
+    "typescript",
+    "javascript"
+  ],
+  "private": false,
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --clean --service-worker=false --no-prerender --template 'src/template.html'",
@@ -54,7 +65,7 @@
     "preact-compat": "^3.18.4",
     "preact-material-components": "^1.5.6",
     "preact-router": "^2.5.7",
-    "web3": "^1.0.0-beta.46"
+    "web3": "^1.0.0-beta.47"
   },
   "jest": {
     "verbose": true,

@@ -15,7 +15,7 @@ contract FourConnectModifiers is FourConnectBase {
     }
 
     modifier onlyWhenRunning(uint gameId) {
-        require(games[gameId].running);
+        require(games[gameId].running, "Game is not running");
         _;
     }
 
@@ -39,14 +39,14 @@ contract FourConnectModifiers is FourConnectBase {
 
     modifier onlyOwner(uint gameId) {
         require(
-            msg.sender == games[gameId].playerOne);
+            msg.sender == games[gameId].playerOne, "Only owner of this game");
         _;
     }
 
     /// @notice Only the player who is supposed to turn
     /// @param gameId The id of the game
     modifier onlyActivePlayer(uint gameId) {
-        require(msg.sender == getPlayerAddress(gameId, true));
+        require(msg.sender == getPlayerAddress(gameId, true), "Only active player");
         _;
     }
 

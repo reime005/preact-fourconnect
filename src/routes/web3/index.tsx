@@ -366,11 +366,10 @@ class Web3Route extends Component<Props, State> {
     );
 
     const cells = [...game.cells];
-    alert(`bla ${game.currentPlayer}, ${cells[38]}`)
     cells[cellIndex] = Number(game.currentPlayer);
 
     const end = gameEnd(cellIndex, { cells, currentPlayer: nextPlayer(game.currentPlayer) });
-    console.error(end);
+
     if (end.isGameEnd) {
       alert("This will be your winning move!");
       makeMoveAndClaimVictory(this.fourConnectListener, this.state.selectedGameId, cellIndex, end.winningCells.map((cell) => cell.i));

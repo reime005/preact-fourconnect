@@ -63,7 +63,7 @@ export class FourConnectListener {
         while (state.drizzleStatus && !state.drizzleStatus.initialized) {
           state = this.drizzle && this.drizzle.store.getState();
 
-          await delay(2000);
+          await delay(500);
         }
 
         this.contract = this.drizzle.contracts.FourConnect;
@@ -74,7 +74,6 @@ export class FourConnectListener {
           );
           const maxMoveTimeout = await this.callMethod("getMaxMoveTimeout");
 
-          console.warn(maxMoveTimeout);
           res({ web3: this.web3, maxCreationTimeout, maxMoveTimeout });
         } else {
           rej("Error");
