@@ -1,5 +1,7 @@
 # fourconnect-dapp
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/deb5f1fd-07e1-4a32-9206-af7d19df697b/deploy-status)](https://app.netlify.com/sites/fourconnect-dapp/deploys)
+
 This repository demonstrates the usage of React, TypeScript and Solidity Smart Contracts on the Ethereum Blockchain to play the game Connect Four. The web app client is developed using the Preact library, which is basically a small subset of React that only includes basic functionality with the premium of having a small footprint. This includes that the code is being written in both JSX and TSX (language with XML). The smart contracts and game logic are covered by tests.
 
 Tech stack:
