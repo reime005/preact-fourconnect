@@ -27,7 +27,7 @@ const infuraKey = "39b13c927f9046bfa5d6183cc25e5f89";
 //
 const fs = require("fs");
 const mnemonic = fs
-  .readFileSync("/Users/marius/Documents/MetaMaskRinkebySeed")
+  .readFileSync("")
   .toString()
   .trim();
 

@@ -1,5 +1,6 @@
 import { h, Component } from "preact";
 import { Router, route } from "preact-router";
+import createHashHistory from "history/createHashHistory";
 
 import Header from "./header";
 
@@ -39,7 +40,7 @@ export default class App extends Component {
       <div id="app">
         <div id="container">
           <Header isOnline={isOnline} />
-          <Router onChange={this.handleRoute}>
+          <Router onChange={this.handleRoute} history={createHashHistory()}>
             <Home onNewGame={this.onNewGame} path="/" />
             <Game path="/game" />
             <Web3 path="/web3" />
