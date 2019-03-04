@@ -17525,6 +17525,12 @@
     "version": "0.5.2+commit.1df8f40c.Emscripten.clang"
   },
   "networks": {
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0xc90cd32170AAb7845790Eb29bce6BEEACFe406F1",
+      "transactionHash": "0x44dd16d6a64460c488db2e422ec183b6a62307fac92a62cb23169706a159f1e4"
+    },
     "1337": {
       "events": {},
       "links": {},
@@ -17533,7 +17539,7 @@
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-03-03T15:50:34.272Z",
+  "updatedAt": "2019-03-04T20:36:34.256Z",
   "devdoc": {
     "author": "Marius Reimer",
     "details": "This is the core contract",
