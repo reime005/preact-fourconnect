@@ -39,9 +39,4 @@ export default (config, env, helpers) => {
 
   // be able to make relative imports like 'src/components/board/board', not '../../src/components/board/board'
   config.resolve.modules.push(path.resolve("./"));
-
-  if (env.isProd) {
-    let { index } = helpers.getPluginsByName(config, "UglifyJsPlugin")[0];
-    config.plugins.splice(index, 1);
-  }
 };
